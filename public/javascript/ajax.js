@@ -2,7 +2,7 @@
 
 class Ajax{
 	
-	static get_from(url,options){
+	static getFrom(url,options){
 		//  Setting the addition arguments.
 		
 		options=options||{};

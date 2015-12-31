@@ -1,1 +1,1 @@
-Util.get_title();
+Util.set_classname(document.querySelector('div'),'layout')

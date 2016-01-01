@@ -144,3 +144,31 @@
 .ace-twilight .ace_indent-guide {
 	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWMQERFpYLC1tf0PAAgOAnPnhxyiAAAAAElFTkSuQmCC) right repeat-y;
 }
+
+.editor-bar {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 5px 5px 5px 40px;
+	border-bottom: 2px solid #e9e9e9;
+	height: 33px;
+	>button {
+		background-color: transparent;
+		padding: 2px 4px;
+		float: left;
+		margin-right: 6px;
+		color: #919191;
+		&:focus {
+			outline: none;
+		}
+	}
+}
+
+.editor-separator {
+	width: 1px;
+	height: 20px;
+	margin-right: 8px;
+	margin-left: 5px;
+	background-color: #e9e9e9;
+	display: inline-block;
+	float: left;
+}

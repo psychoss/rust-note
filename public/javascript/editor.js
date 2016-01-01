@@ -21,4 +21,11 @@ class Editor {
 		this.editor.getSession().setMode('ace/mode/markdown');
 		this.editor.setOption("wrap", true);
 	}
+	selectedText() {
+		return this.editor.session.getTextRange(this.editor.getSelectionRange())
+	}
+
+	replaceSelectedText(str) {
+		this.editor.session.replace(this.editor.getSelectionRange(), str);
+	}
 }

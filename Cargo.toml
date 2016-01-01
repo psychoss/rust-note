@@ -5,6 +5,7 @@ authors = ["psychoss <626377748@qq.com>"]
 
 [dependencies]
 tiny_http = "0.5"
+time = "*"
 
 [[bin]]
 name = "note"

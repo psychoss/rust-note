@@ -4,13 +4,59 @@ html {
 	font-size: 14px;
 	line-height: 19px;
 	background-color: #fff;
-	overflow-y: scroll;
 	direction: ltr;
 	height: 100%;
 }
 
 body {
 	margin: 0;
+}
+
+.fixed-body {
 	height: 100%;
 	max-height: 100%;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+	color: inherit;
+	font: inherit;
+	margin: 0;
+}
+
+button {
+	overflow: visible;
+}
+
+button,
+select {
+	text-transform: none;
+}
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+	-webkit-appearance: button;
+	cursor: pointer;
+}
+
+body label,
+body input,
+body button,
+body select,
+body textarea {
+	font-size: 0.929em;
+	font-weight: normal;
+	line-height: 18px;
+}
+
+body input,
+body button,
+body select,
+body textarea {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

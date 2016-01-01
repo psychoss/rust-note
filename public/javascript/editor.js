@@ -20,6 +20,17 @@ class Editor {
 		this.editor.setShowPrintMargin(false);
 		this.editor.getSession().setMode('ace/mode/markdown');
 		this.editor.setOption("wrap", true);
+		this._bindContentChanged();
+		
+	}
+	_bindContentChanged(){
+		this.markdownBody=document.querySelector('.markdown-body');
+		var self=this;
+		if (this.markdownBody){
+			this.editor.on('change',function(_,e){
+				self.markdownBody.innerHTML=marked(e.getValue().trim());
+			});
+		}		
 	}
 	selectedText() {
 		return this.editor.session.getTextRange(this.editor.getSelectionRange())

@@ -1,0 +1,15 @@
+@mixin partial-size($size, $columns, $gutter) {
+  width: calc(#{(($size / $columns) * 100)+"%"} - #{$gutter});
+
+  .grid--no-spacing > & {
+    width: #{(($size / $columns) * 100)+"%"};
+  }
+}
+
+@mixin offset-size($size, $columns, $gutter) {
+  margin-left: calc(#{(($size / $columns) * 100)+"%"} + #{$gutter / 2});
+
+  .grid.grid--no-spacing > & {
+    margin-left: #{(($size / $columns) * 100)+"%"};
+  }
+}

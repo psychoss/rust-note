@@ -1,0 +1,22 @@
+.grid {
+	display: flex;
+	flex-flow: row wrap;
+	margin: 0 auto 0 auto;
+	align-items: stretch;
+}
+
+.cell {
+	box-sizing: border-box;
+}
+
+@for $i from 1 through $grid-desktop-columns {
+	.cell--#{$i}-col {
+		@include partial-size($i, $grid-desktop-columns, $grid-desktop-gutter);
+	}
+}
+
+@for $i from 1 through ($grid-desktop-columns - 1) {
+	.cell--#{$i}-offset {
+		@include offset-size($i, $grid-desktop-columns, $grid-desktop-gutter);
+	}
+}

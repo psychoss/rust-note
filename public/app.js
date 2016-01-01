@@ -1,1 +1,1 @@
-Util.set_classname(document.querySelector('div'),'layout')
+var editor=new Editor;

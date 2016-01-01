@@ -30,7 +30,7 @@ impl Req {
             "/" => {
                 let mut p = self.context.root.clone();
                 p.push("index.html");
-                println!("{:?}", p.as_path());
+                //println!("{:?}", p.as_path());
                 self.file_server(&p.as_path(), req);
             }
             _ => {
@@ -46,7 +46,7 @@ impl Req {
                     // before push into the path bufffer
                     let mut file_name =  unsafe { url.slice_unchecked(1, url.len()) };
                     file_name=util::truncate_before_by(file_name,'?');
-                    println!("{:?}",file_name);
+                    //println!("{:?}",file_name);
                     p.push(file_name);
 
                     self.file_server(&p.as_path(), req);

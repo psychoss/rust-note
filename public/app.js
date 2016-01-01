@@ -1,1 +1,3 @@
-var editor=new Editor;
+'use strict';
+
+const editor=new Editor;

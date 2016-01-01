@@ -4,3 +4,8 @@ version = "0.1.0"
 authors = ["psychoss <626377748@qq.com>"]
 
 [dependencies]
+tiny_http = "0.5"
+
+[[bin]]
+name = "note"
+path="src/bin/main.rs"

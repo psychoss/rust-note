@@ -18,6 +18,7 @@ class Editor {
 		this.editor = ace.edit(this.container);
 		this.editor.$blockScrolling = Infinity;
 		this.editor.setShowPrintMargin(false);
-		this.editor.getSession().setMode('markdown');
+		this.editor.getSession().setMode('ace/mode/markdown');
+		this.editor.setOption("wrap", true);
 	}
 }

@@ -2,3 +2,4 @@ target
 Cargo.lock
 node/node_modules
 public/test
+database

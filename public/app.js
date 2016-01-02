@@ -1,9 +1,9 @@
 'use strict';
 
 const editor = new Editor;
-new CommandBridge(editor);
+const cmd_bridge=new CommandBridge(editor);
+cmd_bridge.bindElement();
 
-console.log(TextProcessor.setHeader("3"));
 
 
 function configureMarkdown() {

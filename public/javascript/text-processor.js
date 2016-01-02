@@ -2,15 +2,20 @@
 
 class TextProcessor {
 
-	static setHeader(str) {
-		if (typeof str==='undefined')return;
-		// “ ” - 32
-		//“#” - 35
-		let first_char = str.codePointAt(0);
-		if (first_char == 35 || first_char == 32) {
-			return '#'.concat(str);
-		} else {
-			return '# '.concat(str);
+	static bold(str) {
+		str=str.trim();
+		if (/^\*{2}[^\n]*\*{2}$/.test(str)){
+			return [].slice.call(str,2,str.length-2).join("");
+		}else{
+			return " **"+str+"** ";
+		}
+	}
+	static italic(str){
+			str=str.trim();
+		if (/^\*[^\n]*\*$/.test(str)){
+			return [].slice.call(str,1,str.length-1).join("");
+		}else{
+			return " *"+str+"* ";
 		}
 	}
 

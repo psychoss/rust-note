@@ -2,7 +2,7 @@
 
 class Ajax{
 	
-	static getFrom(url,options){
+	static req(url,options){
 		//  Setting the addition arguments.
 		
 		options=options||{};
@@ -12,7 +12,7 @@ class Ajax{
 		
 		var req=new Request(url);
 		fetch(req,{
-		
+		method:method
 		})
 	}
 }

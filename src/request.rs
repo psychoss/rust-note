@@ -9,6 +9,8 @@ use time::{self, Timespec};
 use tiny_http::{Method, Header, Request, Response, StatusCode};
 use url::Url;
 use util;
+const ROUTE_PUSH:&'static str ="/push";
+
 macro_rules! send {
     ($a:expr,$b:expr,$c:expr) => (match $b {
        Some(val) => {
@@ -35,11 +37,14 @@ impl Req {
             &Method::Get => {
                 self.get(req);
             }
+            &Method::Post=>{
+                self.post(req);
+            }
             _ => {}
         }
     }
 
-    pub fn get(&self, mut req: Request) {
+     fn get(&self, mut req: Request) {
         let uri: &str = &req.url().to_string();
         let mut p = self.context.root.clone();
         let url = Url::new(uri, &self.context);
@@ -51,6 +56,17 @@ impl Req {
                 error_end(req,404);
             }
         }
+    }
+    fn post(&self,mut req: Request ){
+          let uri: &str = &req.url().to_string();
+          match uri{
+              ROUTE_PUSH=>{
+                  
+              }
+              _=>{
+                  error_end(req,404);
+              }
+          }
     }
 }
 

@@ -4,6 +4,8 @@ use std::path::Path;
 use time::{self, Timespec};
 use std::slice;
 
+use std::fs::File;
+
 
 pub fn get_last_modified(p: &Path) -> Option<String> {
     match fs::metadata(p) {
@@ -14,12 +16,14 @@ pub fn get_last_modified(p: &Path) -> Option<String> {
         Err(err) => None,
     }
 }
+pub fn get_file_size(file:&File)->Option<usize>{
+    file.metadata().ok().map(|v| v.len() as usize)
+}
 //unsafe { url.slice_unchecked(1, url.len()) };
 
 pub fn truncate_after(s: &str, mid: usize) -> &str {
     let (_, after) = s.split_at(mid);
            println!("a{:?}",after);
-
    after
    
 }

@@ -3,7 +3,20 @@ use std::path::Path;
 use tiny_http::{Header, Response};
 use util::*;
 
+// const CONTENT_TYPE:&'static str ="Content-Type";
+// const LAST_MODIFIED:&'static str ="Last-Modified";
+// const IF_MODIFIED_SINCE:&'static str ="If-Modified-Since";
+// const ACCEPT_ENCODING:&'static str="Accept-Encoding";
 
+
+pub fn get_header_value( name:&'static str,header:&[Header])->Option<String>{
+    for v in header {
+        if v.field.equiv(&name) {
+            return Some(v.value.as_str().to_string())
+        }
+    }
+    None
+}
 
 // A simple way to set the response headers.
 pub fn set_file_header(p: &Path, res: Response<File>) -> Response<File> {

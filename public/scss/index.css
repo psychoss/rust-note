@@ -17,6 +17,16 @@ body label, body input, body button, body select, body textarea { font-size: 0.9
 
 body input, body button, body select, body textarea { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
+h1 { font-size: 1.5em; }
+
+h2 { font-size: 1.4em; }
+
+h2 { color: black; font-weight: 500; margin: 20px 0 15px 0; padding-bottom: 6px; }
+
+h1, h2, h3, h4 { font-family: "Fira Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+h1, h2, h3, h4 { color: black; font-weight: 500; margin: 20px 0 15px 0; padding-bottom: 6px; }
+
 .pos-relative { position: relative; }
 
 .layout { display: flex; flex-direction: row; height: 100%; }
@@ -247,3 +257,7 @@ body input, body button, body select, body textarea { font-family: "Helvetica Ne
 .cell.markdown-container { max-width: 50%; overflow-y: auto; }
 
 .markdown-body { box-sizing: border-box; padding: 8px; }
+
+.markdown-body h1 { border-bottom: 1px dashed #D5D5D5; margin-top: 0; }
+
+.markdown-body h2 { border-bottom: 1px solid #DDD; }

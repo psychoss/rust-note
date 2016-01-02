@@ -1,6 +1,6 @@
 use context::Context;
 use file_server;
-use header::*;
+use header;
 use std::fs::{self, File};
 use std::os::unix::fs::MetadataExt;
 use std::path::{Path, PathBuf};
@@ -30,7 +30,7 @@ impl Req {
         Req { context: con }
     }
 
-    pub fn dispatch(&self, req: Request) {
+    pub fn dispatch(&self, mut req: Request) {
         match req.method() {
             &Method::Get => {
                 self.get(req);
@@ -39,7 +39,7 @@ impl Req {
         }
     }
 
-    pub fn get(&self, req: Request) {
+    pub fn get(&self, mut req: Request) {
         let uri: &str = &req.url().to_string();
         let mut p = self.context.root.clone();
         let url = Url::new(uri, &self.context);

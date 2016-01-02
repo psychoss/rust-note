@@ -16,7 +16,7 @@ pub fn new_server<A: ToSocketAddrs>(addr: A,context:Context) {
     let server = Server::http(sock_addr).unwrap();
     let arc_context=Arc::new(context);
     
-    for r in server.incoming_requests() {
+    for mut r in server.incoming_requests() {
         Req::new(arc_context.clone()).dispatch(r);
     }
 }

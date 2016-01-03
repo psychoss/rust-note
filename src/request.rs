@@ -9,15 +9,15 @@ use time::{self, Timespec};
 use tiny_http::{Method, Header, Request, Response, StatusCode};
 use url::Url;
 use util;
-const ROUTE_PUSH:&'static str ="/push";
+const ROUTE_PUSH: &'static str = "/push";
 
 macro_rules! send {
-    ($a:expr,$b:expr,$c:expr) => (match $b {
-       Some(val) => {
+    ($a:expr,$b:expr) => (match $b {
+       Ok(val) => {
         $a.respond(val);
        },
-       None => {
-                     let res=Response::new_empty(StatusCode($c));
+       Err(v) => {
+                     let res=Response::new_empty(StatusCode(v));
                      $a.respond(res);
         }
     })
@@ -37,36 +37,35 @@ impl Req {
             &Method::Get => {
                 self.get(req);
             }
-            &Method::Post=>{
+            &Method::Post => {
                 self.post(req);
             }
             _ => {}
         }
     }
 
-     fn get(&self, mut req: Request) {
+    fn get(&self, mut req: Request) {
         let uri: &str = &req.url().to_string();
         let mut p = self.context.root.clone();
         let url = Url::new(uri, &self.context);
         match url.path {
             Some(ref v) => {
-                send!(req, file_server::serve(v), 404);
+            
+                send!(req, file_server::serve(&req,v));
             }
             None => {
-                error_end(req,404);
+                error_end(req, 404);
             }
         }
     }
-    fn post(&self,mut req: Request ){
-          let uri: &str = &req.url().to_string();
-          match uri{
-              ROUTE_PUSH=>{
-                  
-              }
-              _=>{
-                  error_end(req,404);
-              }
-          }
+    fn post(&self, mut req: Request) {
+        let uri: &str = &req.url().to_string();
+        match uri {
+            ROUTE_PUSH => {}
+            _ => {
+                error_end(req, 404);
+            }
+        }
     }
 }
 
@@ -100,13 +99,3 @@ fn error_end(req: Request, status_code: u16) {
 }
 
 
-fn check_modified(r: &Request, last_modified: &str) -> bool {
-    for v in r.headers() {
-        if v.field.equiv(&"If-Modified-Since") {
-            if v.value.as_str() == last_modified {
-                return false;
-            }
-        }
-    }
-    true
-}

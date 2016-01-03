@@ -1,9 +1,18 @@
 $z-index-header:20;
-
-/**
- * 
- * 
- */
+$z-index-search-box:21;
+$z-index-dropdown: 22;
 
 $grid-desktop-columns: 12 !default;
 $grid-desktop-gutter: 16px !default;
+
+/**
+   * ------------------------------------------------------------------------
+   * Color 
+   * ------------------------------------------------------------------------
+   */
+
+$hover-color:#ffffa6;
+$divider-color:#e5e5e5;
+$border-color:#e9e9e9;
+
+$max-height:200px;

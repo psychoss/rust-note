@@ -38,63 +38,79 @@ class CommandBridge {
 	_commandBuild() {
 		var self = this;
 		return [{
-				name: "help",
-				bindKey: {
-					win: "F2"
-				},
-				exec: function() {
+			name: "help",
+			bindKey: {
+				win: "F2"
+			},
+			exec: function() {
 
-				}
-			}, {
-				name: "header",
-				bindKey: {
-					win: "F1"
-				},
-				exec: self._addTitleMarker
-			}, {
-				name: "bold",
-				bindKey: {
-					win: "F3"
-				},
-				exec: self._toggleBoldMarker
-			}, {
-				name: "italic",
-				exec: self._toggleItalicMarker
-			}]
-			
-		}
-		_addTitleMarker(e) {
-			let range = e.getSelectionRange().collapseRows();
-			let doc = e.session.doc;
-			let line = doc.getLine(range.start.row)
-			if (/^#* /.test(line)) {
-				doc.insertInLine({
-					row: range.start.row,
-					column: 0
-				}, "#");
-			} else {
-				doc.insertInLine({
-					row: range.start.row,
-					column: 0
-				}, "# ");
 			}
-		}
-		_toggleBoldMarker(e) {
-			let str = e.session.getTextRange(e.getSelectionRange())
-			str = TextProcessor.bold(str);
-			console.log(str);
-			e.session.replace(e.getSelectionRange(), str);
-		}
-		_toggleItalicMarker(e) {
-			let str = e.session.getTextRange(e.getSelectionRange())
-			str = TextProcessor.italic(str);
-			e.session.replace(e.getSelectionRange(), str);
-		}
+		}, {
+			name: "header",
+			bindKey: {
+				win: "F1"
+			},
+			exec: self._addTitleMarker
+		}, {
+			name: "bold",
+			bindKey: {
+				win: "F3"
+			},
+			exec: self._toggleBoldMarker
+		}, {
+			name: "italic",
+			exec: self._toggleItalicMarker
+		}, {
+			name: "link",
+			exec: self._addLinkMarker
+		},{
+			name:"code",
+			exec:self._addCodeMarker
+		}]
 
 	}
+	_addTitleMarker(e) {
+		let range = e.getSelectionRange().collapseRows();
+		let doc = e.session.doc;
+		let line = doc.getLine(range.start.row)
+		if (/^#* /.test(line)) {
+			doc.insertInLine({
+				row: range.start.row,
+				column: 0
+			}, "#");
+		} else {
+			doc.insertInLine({
+				row: range.start.row,
+				column: 0
+			}, "# ");
+		}
+	}
+	_toggleBoldMarker(e) {
+		let str = e.session.getTextRange(e.getSelectionRange())
+		str = TextProcessor.bold(str);
+		console.log(str);
+		e.session.replace(e.getSelectionRange(), str);
+	}
+	_toggleItalicMarker(e) {
+		let str = e.session.getTextRange(e.getSelectionRange())
+		str = TextProcessor.italic(str);
+		e.session.replace(e.getSelectionRange(), str);
+	}
+	_addLinkMarker(e) {
+		let str = e.session.getTextRange(e.getSelectionRange())
+		str = TextProcessor.link(str);
+		e.session.replace(e.getSelectionRange(), str);
+	}
+	_addCodeMarker(e){
+		let str = e.session.getTextRange(e.getSelectionRange())
+		str = TextProcessor.code(str);
+		e.session.replace(e.getSelectionRange(), str);
+	}
 
-	// selectedText() {
-	// 		return this.editor.session.getTextRange(this.editor.getSelectionRange())
-	// 	}
+}
 
-	// 	replaceSelectedText(str) {
+// selectedText() {
+// 		return this.editor.session.getTextRange(this.editor.getSelectionRange())
+// 	}
+
+// 	replaceSelectedText(str) {

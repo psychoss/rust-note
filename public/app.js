@@ -32,3 +32,6 @@ function autoSize() {
 	})
 }
 autoSize();
+
+new Dropdown('.js-dropdown-menu');
+

@@ -1,21 +1,33 @@
 use std::path::{Path, PathBuf};
 use std::fs::File;
-use tiny_http::Response;
+use tiny_http::{Header,Request,Response};
+use header;
+use util;
 
-pub fn serve(p: &Path) -> Option<Response<File>> {
-    // let last_modified = util::get_last_modified(p).unwrap();
-    // if !check_modifed(&req, &last_modified) {
-    //     error_end(req, 304);
-    //     return;
-    // }
+pub fn serve(req:&Request,p: &Path) -> Result<Response<File>, u16> {
+    let last_modified = util::get_last_modified(p).unwrap();
+    if !check_modified(&req, &last_modified) {
+
+        return Err(304);
+    }
     match File::open(p) {
         Ok(v) => {
 
             let mut res = Response::from_file(v);
-            // res = set_file_header(p, res);
-            Some(res)
+            header::set_file_header(p, &last_modified,&mut res);
+            Ok(res)
         }
-        Err(_) =>  None,
+        Err(_) => Err(404),
     }
 
+}
+fn check_modified(r: &Request, last_modified: &str) -> bool {
+    for v in r.headers() {
+        if v.field.equiv(&"If-Modified-Since") {
+            if v.value.as_str() == last_modified {
+                return false;
+            }
+        }
+    }
+    true
 }

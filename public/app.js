@@ -1,7 +1,7 @@
 'use strict';
 
 const editor = new Editor;
-const cmd_bridge=new CommandBridge(editor);
+const cmd_bridge = new CommandBridge(editor);
 cmd_bridge.bindElement();
 
 
@@ -25,13 +25,12 @@ function configureMarkdown() {
 configureMarkdown();
 
 function autoSize() {
-		preview.style.height = (window.innerHeight-33) + 'px';
+	preview.style.height = (window.innerHeight - 33) + 'px';
 
 	window.addEventListener('resize', function() {
-		preview.style.height = (window.innerHeight-33) + 'px';
+		preview.style.height = (window.innerHeight - 33) + 'px';
 	})
 }
 autoSize();
 
 new Dropdown('.js-dropdown-menu');
-

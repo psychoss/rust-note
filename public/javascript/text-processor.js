@@ -29,9 +29,25 @@ class TextProcessor {
 	static code(str) {
 		if (/\n/.test(str)) {
 			return ["\n", "```", "\n", str, "\n", "```", "\n"].join("");
-		}else{
-			return [ " `", str.trim(), "` "].join("");			
+		} else {
+			return [" `", str.trim(), "` "].join("");
 		}
 	}
-
+	static li(str) {
+		var list = str.trim().split('\n');
+		var arr = ['\n'];
+		for (var index = 0; index < list.length; index++) {
+			arr.push("- " + list[index].trim() + "\n");
+		}
+		return arr.join('');
+	}
+	static ol(str) {
+		var list = str.trim().split('\n');
+		var arr = ['\n'];
+		for (var index = 0; index < list.length; index++) {
+			arr.push((index + 1) + ". " + list[index].trim() + "\n");
+		}
+		arr.push('\n');
+		return arr.join('');
+	}
 }

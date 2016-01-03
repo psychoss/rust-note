@@ -1,2 +1,0 @@
-getBoundingClientRect
-addEventListener

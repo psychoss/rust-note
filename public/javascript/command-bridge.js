@@ -39,9 +39,7 @@ class CommandBridge {
 		var self = this;
 		return [{
 			name: "help",
-			bindKey: {
-				win: "F2"
-			},
+
 			exec: function() {
 
 			}
@@ -63,9 +61,21 @@ class CommandBridge {
 		}, {
 			name: "link",
 			exec: self._addLinkMarker
-		},{
-			name:"code",
-			exec:self._addCodeMarker
+		}, {
+			name: "code",
+			bindKey: {
+				win: "F2"
+			},
+			exec: self._addCodeMarker
+		}, {
+			name: "li",
+			exec: self._addListMarker
+		}, {
+			name: "ol",
+			exec: self._addOlMarker
+		}, {
+			name: "hr",
+			exec: self._addHrMarker
 		}]
 
 	}
@@ -101,12 +111,26 @@ class CommandBridge {
 		str = TextProcessor.link(str);
 		e.session.replace(e.getSelectionRange(), str);
 	}
-	_addCodeMarker(e){
+	_addCodeMarker(e) {
 		let str = e.session.getTextRange(e.getSelectionRange())
 		str = TextProcessor.code(str);
 		e.session.replace(e.getSelectionRange(), str);
 	}
-
+	_addListMarker(e) {
+		let str = e.session.getTextRange(e.getSelectionRange())
+		str = TextProcessor.li(str);
+		e.session.replace(e.getSelectionRange(), str);
+	}
+	_addOlMarker(e) {
+		let str = e.session.getTextRange(e.getSelectionRange())
+		str = TextProcessor.ol(str);
+		e.session.replace(e.getSelectionRange(), str);
+	}
+	_addHrMarker(e) {
+		let str = e.session.getTextRange(e.getSelectionRange())
+		str = str+"\n-----\n\n";
+		e.session.replace(e.getSelectionRange(), str);
+	}
 }
 
 // selectedText() {

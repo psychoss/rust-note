@@ -7,19 +7,19 @@
     	`modified`	INTEGER,
     	PRIMARY KEY(_id)
     );
-	
+---
    CREATE VIRTUAL TABLE notes USING fts4(content="markdown",_id,content);
-    
+---
     INSERT INTO notes(notes) VALUES('rebuild');
-
+---
     CREATE TRIGGER notes_bu BEFORE UPDATE ON markdown BEGIN
       DELETE FROM notes WHERE docid=old.rowid;
     END;
-    
+---
     CREATE TRIGGER notes_au AFTER UPDATE ON markdown BEGIN
       INSERT INTO notes(docid, _id, content) VALUES(new.rowid, new._id, new.content);
     END;
-    
+--- 
     CREATE TRIGGER notes_ai AFTER INSERT ON markdown BEGIN
       INSERT INTO notes(docid, _id, content) VALUES(new.rowid, new._id, new.content);
     END;

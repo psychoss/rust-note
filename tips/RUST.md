@@ -51,7 +51,8 @@ fn main() {
 - https://github.com/rust-lang-deprecated/time
 - https://users.rust-lang.org
 - http://doc.rust-lang.org/rustc-serialize
-http://jgallagher.github.io/rusqlite/rusqlite/index.html
+- http://jgallagher.github.io/rusqlite/rusqlite/index.html
+- http://doc.crates.io/manifest.html#the-%5Bprofile.*%5D-sections
 
     strftime - format date and time
     

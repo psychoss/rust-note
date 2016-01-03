@@ -7,7 +7,6 @@ use util;
 pub fn serve(req:&Request,p: &Path) -> Result<Response<File>, u16> {
     let last_modified = util::get_last_modified(p).unwrap();
     if !check_modified(&req, &last_modified) {
-
         return Err(304);
     }
     match File::open(p) {

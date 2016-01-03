@@ -12,7 +12,6 @@ pub fn push(mut req: Request, db: &Db) {
             if o.is_none() {
                 error_send!(req, 400);
                 return;
-
             }
             let json = o.unwrap();
             let id = get_i64("_id", json);
@@ -25,7 +24,7 @@ pub fn push(mut req: Request, db: &Db) {
 
                 let res = Response::from_string(db.save(title, cat, content, create, modified)
                                                   .to_string());
-                req.respond(res);
+                let_ = req.respond(res);
             } else {
                 error_send!(req, 400);
             }

@@ -1,12 +1,10 @@
 use context::Context;
 use database::Db;
 use file_server;
-
+use post_handler;
 use std::sync::Arc;
 use tiny_http::{Method, Request, Response, StatusCode};
 use url::Url;
-
-use post_handler;
 
 
 const ROUTE_PUSH: &'static str = "/push";
@@ -54,11 +52,10 @@ impl Req {
         let url = Url::new(uri, &self.context);
         match url.path {
             Some(ref v) => {
-
                 send!(req, file_server::serve(&req, v));
             }
             None => {
-                error_end(req, 404);
+                error_send!(req, 404);
             }
         }
     }
@@ -66,19 +63,11 @@ impl Req {
         let uri: &str = &req.url().to_string();
         match uri {
             ROUTE_PUSH => {
- post_handler::push(req, &self.db);
-              
-             
-
+                post_handler::push(req, &self.db);
             }
             _ => {
-                error_end(req, 404);
+                error_send!(req, 404);
             }
         }
     }
-}
-
-fn error_end(req: Request, status_code: u16) {
-    let rep = Response::new_empty(StatusCode(status_code));
-    let _ = req.respond(rep);
 }

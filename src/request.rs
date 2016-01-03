@@ -11,14 +11,15 @@ use post_handler;
 
 const ROUTE_PUSH: &'static str = "/push";
 
+// A macro for send.
 macro_rules! send {
     ($a:expr,$b:expr) => (match $b {
        Ok(val) => {
-        $a.respond(val);
+        let _=$a.respond(val);
        },
        Err(v) => {
                      let res=Response::new_empty(StatusCode(v));
-                     $a.respond(res);
+                     let _=$a.respond(res);
         }
     })
 }
@@ -36,7 +37,7 @@ impl Req {
         }
     }
 
-    pub fn dispatch(&self, mut req: Request) {
+    pub fn dispatch(&self, req: Request) {
         match req.method() {
             &Method::Get => {
                 self.get(req);
@@ -48,9 +49,8 @@ impl Req {
         }
     }
 
-    fn get(&self, mut req: Request) {
+    fn get(&self, req: Request) {
         let uri: &str = &req.url().to_string();
-        let mut p = self.context.root.clone();
         let url = Url::new(uri, &self.context);
         match url.path {
             Some(ref v) => {
@@ -62,13 +62,13 @@ impl Req {
             }
         }
     }
-    fn post(&self, mut req: Request) {
+    fn post(&self, req: Request) {
         let uri: &str = &req.url().to_string();
         match uri {
             ROUTE_PUSH => {
-
-                post_handler::push(req, &self.db);
-
+ post_handler::push(req, &self.db);
+              
+             
 
             }
             _ => {
@@ -77,31 +77,6 @@ impl Req {
         }
     }
 }
-
-
-// p.push("index.html");
-// //println!("{:?}", p.as_path());
-// self.file_server(&p.as_path(), req);
-
-
-// let mut ext = url.split(".").last().unwrap_or("");
-
-// if ext.len() > 0 {
-
-// let mut p = self.context.root.clone();
-
-//     // Because the url startwiths "/"
-//     // so must trim the first character
-//     // before push into the path bufffer
-//     let mut file_name =  unsafe { url.slice_unchecked(1, url.len()) };
-//     file_name=util::truncate_before_by(file_name,'?');
-//     //println!("{:?}",file_name);
-//     p.push(file_name);
-
-// self.file_server(&p.as_path(), req);
-
-// }
-
 
 fn error_end(req: Request, status_code: u16) {
     let rep = Response::new_empty(StatusCode(status_code));

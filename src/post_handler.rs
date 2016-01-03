@@ -1,15 +1,20 @@
 use body_parser;
 use rustc_serialize::json::Object;
-use tiny_http::Request;
+use tiny_http::{Request, Response, StatusCode};
 use database::Db;
 
-pub fn push(mut req: Request, db: &Db) -> i64 {
+pub fn push(mut req: Request, db: &Db) {
 
     match body_parser::parse(&mut req) {
         Some(v) => {
             // post_handler::push(v);
-            let json = v.as_object().unwrap();
-            println!("{:?}", json);
+            let o = v.as_object();
+            if o.is_none() {
+                error_send!(req, 400);
+                return;
+
+            }
+            let json = o.unwrap();
             let id = get_i64("_id", json);
             let title = get_string("title", json);
             let cat = get_string("cat", json);
@@ -17,15 +22,20 @@ pub fn push(mut req: Request, db: &Db) -> i64 {
             let create = get_i64("create", json);
             let modified = get_i64("modified", json);
             if id == 0i64 {
-                db.save(title, cat, content, create, modified)
 
+                let res = Response::from_string(db.save(title, cat, content, create, modified)
+                                                  .to_string());
+                req.respond(res);
             } else {
-                0i64
+                error_send!(req, 400);
             }
+
             // println!("{}-{}-{}-{}-{}", id,title,content,create,modified);
 
         }
-        None => 0i64,
+        None => {
+            error_send!(req, 400);
+        }
     }
 
 

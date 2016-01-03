@@ -1,6 +1,6 @@
 use rustc_serialize::json::Json;
 use header;
-use tiny_http::{Header, Request};
+use tiny_http::Request;
 
 pub fn parse(req: &mut Request) ->Option<Json>{
     let mimetype = {

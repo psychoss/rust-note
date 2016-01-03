@@ -4,11 +4,11 @@ extern crate rusqlite;
 extern crate rustc_serialize;
 
 
+#[macro_use]mod macros;
 mod body_parser;
 mod database;
 mod file_server;
 mod header;
-mod macros;
 mod request;
 mod url;
 mod util;

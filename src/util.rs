@@ -14,7 +14,7 @@ pub fn get_last_modified(p: &Path) -> Option<String> {
             let tm = &time::at(Timespec::new(v.mtime() as i64, v.mtime_nsec() as i32));
             Some(tm.to_utc().rfc822().to_string())
         }
-        Err(err) => None,
+        Err(_) => None,
     }
 }
 pub fn get_file_size(file:&File)->Option<usize>{

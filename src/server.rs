@@ -1,5 +1,5 @@
 use std::net::ToSocketAddrs;
-use tiny_http::{Server,Request};
+use tiny_http::Server;
 use std::sync::Arc;
 
 use context::Context;

@@ -1,6 +1,6 @@
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::fs::File;
-use tiny_http::{Header,Request,Response};
+use tiny_http::{Request,Response};
 use header;
 use util;
 

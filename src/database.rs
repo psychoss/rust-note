@@ -19,7 +19,7 @@ impl Db {
                                  &modified]);
         match result {
             Ok(v) => v as i64,
-            Err(v) => 0i64,
+            Err(_) => 0i64,
         }
 
 

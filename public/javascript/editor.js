@@ -32,6 +32,9 @@ class Editor {
 			});
 		}		
 	}
+	getText(){
+		return this.editor.getValue();
+	}
 	selectedText() {
 		return this.editor.session.getTextRange(this.editor.getSelectionRange())
 	}

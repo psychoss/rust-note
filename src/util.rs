@@ -2,10 +2,11 @@ use std::fs;
 use std::os::unix::fs::MetadataExt;
 use std::path::Path;
 use time::{self, Timespec};
-use std::slice;
-
 use std::fs::File;
 
+pub fn get_short_date()->String{
+    time::now().strftime("%Y-%m-%d").unwrap().to_string()
+}
 
 pub fn get_last_modified(p: &Path) -> Option<String> {
     match fs::metadata(p) {
@@ -19,45 +20,7 @@ pub fn get_last_modified(p: &Path) -> Option<String> {
 pub fn get_file_size(file:&File)->Option<usize>{
     file.metadata().ok().map(|v| v.len() as usize)
 }
-//unsafe { url.slice_unchecked(1, url.len()) };
 
-pub fn truncate_after(s: &str, mid: usize) -> &str {
-    let (_, after) = s.split_at(mid);
-           println!("a{:?}",after);
-   after
-   
-}
-pub fn truncate_after_by(s: &str, c: char) -> &str {
-   match  s.find(c){
-       Some(v)=>{
-              truncate_after(s,v)
-       }
-       None=>{
-         s
-           
-       }
-   }
-  
-  
-}
-
-pub fn truncate_before(s: &str, mid: usize) -> &str {
-    let (before, _) = s.split_at(mid);
-    before
-}
-pub fn truncate_before_by(s: &str, c: char) -> &str {
-   match  s.find(c){
-       Some(v)=>{
-              truncate_before(s,v)
-       }
-       None=>{
-         s
-           
-       }
-   }
-  
-  
-}
 // pub fn str_split(s:&str, sep:&char){
 //    let vec:Vec<char>= s.chars().collect();
 //    let l=vec.len();

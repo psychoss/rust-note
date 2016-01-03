@@ -42,7 +42,22 @@ fn main() {
 ```
 
 
+- http://man7.org/linux/man-pages/man3/strftime.3.html
 - http://play.rust-lang.org/
-- https://doc.rust-lang.org/stable/std/
 - https://crates.io/
+- https://doc.rust-lang.org/stable/std/
+- https://doc.rust-lang.org/time
+- https://github.com/hyperium/hyper
+- https://github.com/rust-lang-deprecated/time
 - https://users.rust-lang.org
+- http://doc.rust-lang.org/rustc-serialize
+http://jgallagher.github.io/rusqlite/rusqlite/index.html
+
+    strftime - format date and time
+    
+    
+fn unwrap_or_else<F: FnOnce() -> T>(self, f: F) -> T
+
+let k = 10;
+assert_eq!(Some(4).unwrap_or_else(|| 2 * k), 4);
+assert_eq!(None.unwrap_or_else(|| 2 * k), 20);

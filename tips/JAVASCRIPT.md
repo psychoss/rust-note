@@ -1,3 +1,5 @@
+Javascript
+
 - getBoundingClientRect
 - addEventListener
 
@@ -30,3 +32,5 @@
 ### Returns
 
 A Promise that resolves to a Response object.
+
+http://www.cnblogs.com/TankXiao/archive/2012/03/21/2337194.html

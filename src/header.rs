@@ -4,7 +4,7 @@ use tiny_http::{Header, Response};
 use util::*;
 use std::io::Read;
 
-// const CONTENT_TYPE:&'static str ="Content-Type";
+ const CONTENT_TYPE:&'static str ="Content-Type";
 // const LAST_MODIFIED:&'static str ="Last-Modified";
 // const IF_MODIFIED_SINCE:&'static str ="If-Modified-Since";
 // const ACCEPT_ENCODING:&'static str="Accept-Encoding";
@@ -17,6 +17,10 @@ pub fn get_header_value( name:&'static str,header:&[Header])->Option<String>{
         }
     }
     None
+}
+pub fn get_content_type(header:&[Header])->Option<String>{
+    get_header_value(CONTENT_TYPE,header)
+    
 }
 
 // A simple way to set the response headers.

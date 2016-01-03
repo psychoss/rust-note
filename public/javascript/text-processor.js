@@ -50,4 +50,9 @@ class TextProcessor {
 		arr.push('\n');
 		return arr.join('');
 	}
+	static getFirstLine(str){
+		if (str.trim()){
+			return str.split('\n')[0];
+		}
+	}
 }

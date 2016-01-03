@@ -1,14 +1,14 @@
 use context::Context;
+use database::Db;
 use file_server;
-use header;
-use std::fs::{self, File};
-use std::os::unix::fs::MetadataExt;
-use std::path::{Path, PathBuf};
+
 use std::sync::Arc;
-use time::{self, Timespec};
-use tiny_http::{Method, Header, Request, Response, StatusCode};
+use tiny_http::{Method, Request, Response, StatusCode};
 use url::Url;
-use util;
+
+use post_handler;
+
+
 const ROUTE_PUSH: &'static str = "/push";
 
 macro_rules! send {
@@ -25,11 +25,15 @@ macro_rules! send {
 
 pub struct Req {
     context: Arc<Context>,
+    db: Db,
 }
 
 impl Req {
     pub fn new(con: Arc<Context>) -> Req {
-        Req { context: con }
+        Req {
+            context: con,
+            db: Db::new(),
+        }
     }
 
     pub fn dispatch(&self, mut req: Request) {
@@ -50,8 +54,8 @@ impl Req {
         let url = Url::new(uri, &self.context);
         match url.path {
             Some(ref v) => {
-            
-                send!(req, file_server::serve(&req,v));
+
+                send!(req, file_server::serve(&req, v));
             }
             None => {
                 error_end(req, 404);
@@ -61,13 +65,19 @@ impl Req {
     fn post(&self, mut req: Request) {
         let uri: &str = &req.url().to_string();
         match uri {
-            ROUTE_PUSH => {}
+            ROUTE_PUSH => {
+
+                post_handler::push(req, &self.db);
+
+
+            }
             _ => {
                 error_end(req, 404);
             }
         }
     }
 }
+
 
 // p.push("index.html");
 // //println!("{:?}", p.as_path());
@@ -97,5 +107,3 @@ fn error_end(req: Request, status_code: u16) {
     let rep = Response::new_empty(StatusCode(status_code));
     let _ = req.respond(rep);
 }
-
-

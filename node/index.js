@@ -1,12 +1,21 @@
 'use strict';
 const koa = require('koa');
-const kr = require('koa-route');
 const app = koa();
 const resolve = require('path').resolve;
 const send = require('koa-send');
 
 app.use(serve("../public"))
 app.listen(9091);
+
+/**
+ * ------------------------------------------------------------------------
+ *  Execute Command
+ * ------------------------------------------------------------------------
+ */
+var exec = require('child_process').exec;
+var cmd = 'google-chrome http://localhost:9091';
+
+exec(cmd, function(error, stdout, stderr) {});
 
 function serve(root, opts) {
 	opts = opts || {};

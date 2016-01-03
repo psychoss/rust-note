@@ -48,6 +48,8 @@ class Exchange {
 			Ajax.req("/push", options).then(function(res) {
 				res.text().then(function(v) {
 					self._setId(v);
+Util.removeClass(save,"danger");
+					
 				})
 			}).catch(function() {
 
@@ -56,7 +58,7 @@ class Exchange {
 			console.log('update the database use => ',options);
 			Ajax.req("/update", options).then(function(res) {
 				res.text().then(function(v) {
-
+Util.removeClass(save,"danger");
 				})
 			}).catch(function() {
 

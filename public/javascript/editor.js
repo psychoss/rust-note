@@ -1,12 +1,12 @@
 'use strict';
-    /**
-	 * ------------------------------------------------------------------------
-	 *  Global Variables:
-	 *  
-	 * marked
-	 * save (id)
-	 * ------------------------------------------------------------------------
-	 */
+/**
+ * ------------------------------------------------------------------------
+ *  Global Variables:
+ *  
+ * marked
+ * save (id)
+ * ------------------------------------------------------------------------
+ */
 class Editor {
 	constructor() {
 		this._configure();
@@ -28,22 +28,22 @@ class Editor {
 		this.editor.getSession().setMode('ace/mode/markdown');
 		this.editor.setOption("wrap", true);
 		this._bindContentChanged();
-		
+
 	}
-	_bindContentChanged(){
-		this.markdownBody=document.querySelector('.markdown-body');
-		var self=this;
-		if (this.markdownBody){
-			this.editor.on('change',function(_,e){
-				 Util.setClass(save,"danger");
-				self.markdownBody.innerHTML=marked(e.getValue().trim());
+	_bindContentChanged() {
+		this.markdownBody = document.querySelector('.markdown-body');
+		var self = this;
+		if (this.markdownBody) {
+			this.editor.on('change', function(_, e) {
+				Util.addClass(save, "danger");
+				self.markdownBody.innerHTML = marked(e.getValue().trim());
 			});
-		}		
+		}
 	}
-	getText(){
+	getText() {
 		return this.editor.getValue();
 	}
-	setText(str){
+	setText(str) {
 		this.editor.setValue(str);
 	}
 	selectedText() {
@@ -53,5 +53,5 @@ class Editor {
 	replaceSelectedText(str) {
 		this.editor.session.replace(this.editor.getSelectionRange(), str);
 	}
-	
+
 }

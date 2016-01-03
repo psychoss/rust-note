@@ -9,6 +9,9 @@
 	overflow-y: auto;
 	overflow-x: hidden;
 	visibility: hidden;
+	&.is-visible {
+		visibility: visible;
+	}
 	>a {
 		box-sizing: border-box;
 		cursor: pointer;

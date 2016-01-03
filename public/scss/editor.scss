@@ -173,3 +173,7 @@
 	display: inline-block;
 	float: left;
 }
+
+.danger {
+	border-bottom: 1px solid $color-danger!important;
+}

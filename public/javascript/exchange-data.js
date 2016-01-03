@@ -13,14 +13,18 @@ class Exchange {
 
 		save.addEventListener('click', this.save.bind(this));
 	}
-	_getBody() {
-
+	_getId() {
+		return document.body.getAttribute('data-id') || 0;
+	}
+	_setId(id) {
+		document.body.setAttribute('data-id', id);
 	}
 	save() {
 		var options = {
 			method: 'POST'
 		}
 		var data = {};
+		data._id = this._getId();
 		data.content = this.editor.getText();
 		data.title = TextProcessor.getFirstLine(data.content);
 		if (!data.title) {
@@ -28,18 +32,36 @@ class Exchange {
 		} else {
 			data.title = data.title.replace(/^#* */, '').trim();
 		}
-		data.create = Date.now();
+		if (data._id === 0) {
+			data.create = Date.now();
+		}
 		data.modified = Date.now();
 		try {
 			options.body = JSON.stringify(data)
-
 		} catch (e) {
 
 		}
 
-		console.log('complains：', options);
+		var self = this;
 
-		Ajax.req("/push",options);
+		if (data._id === 0) {
+			Ajax.req("/push", options).then(function(res) {
+				res.text().then(function(v) {
+					self._setId(v);
+				})
+			}).catch(function() {
+
+			});
+		} else {
+			console.log('update the database use => ',options);
+			Ajax.req("/update", options).then(function(res) {
+				res.text().then(function(v) {
+
+				})
+			}).catch(function() {
+
+			});
+		}
 	}
 
 }

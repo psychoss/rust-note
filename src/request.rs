@@ -8,6 +8,9 @@ use url::Url;
 
 
 const ROUTE_PUSH: &'static str = "/push";
+const ROUTE_UPDATE: &'static str = "/update";
+const ROUTE_QUERY: &'static str = "/query";
+const ROUTE_QUERY_ONE: &'static str = "/query-one";
 
 // A macro for send.
 macro_rules! send {
@@ -43,7 +46,9 @@ impl Req {
             &Method::Post => {
                 self.post(req);
             }
-            _ => {}
+            _ => {
+                error_send!(req, 400);
+            }
         }
     }
 
@@ -62,8 +67,14 @@ impl Req {
     fn post(&self, req: Request) {
         let uri: &str = &req.url().to_string();
         match uri {
-            ROUTE_PUSH => {
+            ROUTE_PUSH | ROUTE_UPDATE => {
                 post_handler::push(req, &self.db);
+            }
+            ROUTE_QUERY=>{
+                post_handler::query(req, &self.db);
+            }
+            ROUTE_QUERY_ONE=>{
+                post_handler::query_one(req, &self.db);                
             }
             _ => {
                 error_send!(req, 404);

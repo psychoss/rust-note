@@ -206,6 +206,8 @@ h1, h2, h3, h4 { color: black; font-weight: 500; margin: 20px 0 15px 0; padding-
 
 .editor-separator { width: 1px; height: 20px; margin-right: 8px; margin-left: 5px; background-color: #e9e9e9; display: inline-block; float: left; }
 
+.danger { border-bottom: 1px solid #e45735 !important; }
+
 .btn { display: inline-block; margin: 0; padding: 6px 12px; font-weight: 500; font-size: 1em; line-height: 18px; text-align: center; cursor: pointer; transition: all .25s; }
 
 .btn:active { text-shadow: none; }
@@ -390,7 +392,9 @@ code { padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2
 
 .markdown-body pre code { padding: 0; font-size: inherit; white-space: pre; white-space: pre-wrap; word-wrap: break-word; background-color: transparent; border-radius: 0; color: #333; }
 
-.search-box { width: 450px; height: 200px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); position: fixed; top: 3px; left: 50%; transform: translate(-50%); z-index: 21; background-color: #e9e9e9; display: flex; flex-direction: column; visibility: collapse; }
+.search-box { width: 450px; height: 200px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); position: fixed; top: 3px; left: 50%; transform: translate(-50%); z-index: 21; background-color: #e9e9e9; display: flex; flex-direction: column; visibility: hidden; }
+
+.search-box.is-visible { visibility: visible; }
 
 .search-input-container { padding: 3px; }
 
@@ -405,6 +409,8 @@ code { padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2
 .search-list-container > a:hover { background-color: #ffffa6; cursor: pointer; }
 
 .dropdown { border: 1px solid #e9e9e9; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25); background-color: #fff; width: 150px; position: absolute; z-index: 22; max-height: 200px; overflow-y: auto; overflow-x: hidden; visibility: hidden; }
+
+.dropdown.is-visible { visibility: visible; }
 
 .dropdown > a { box-sizing: border-box; cursor: pointer; border-bottom: 1px solid #e5e5e5; display: block; padding: 4px 10px 4px 15px; }
 

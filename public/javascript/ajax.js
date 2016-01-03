@@ -20,7 +20,7 @@ class Ajax {
 
 
 		var req = new Request(url);
-		fetch(req, {
+		return fetch(req, {
 			method: method,
 			headers: headers,
 			body: body

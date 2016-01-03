@@ -1,5 +1,12 @@
 'use strict';
-
+    /**
+	 * ------------------------------------------------------------------------
+	 *  Global Variables:
+	 *  
+	 * marked
+	 * save (id)
+	 * ------------------------------------------------------------------------
+	 */
 class Editor {
 	constructor() {
 		this._configure();
@@ -28,12 +35,16 @@ class Editor {
 		var self=this;
 		if (this.markdownBody){
 			this.editor.on('change',function(_,e){
+				 Util.setClass(save,"danger");
 				self.markdownBody.innerHTML=marked(e.getValue().trim());
 			});
 		}		
 	}
 	getText(){
 		return this.editor.getValue();
+	}
+	setText(str){
+		this.editor.setValue(str);
 	}
 	selectedText() {
 		return this.editor.session.getTextRange(this.editor.getSelectionRange())
@@ -42,4 +53,5 @@ class Editor {
 	replaceSelectedText(str) {
 		this.editor.session.replace(this.editor.getSelectionRange(), str);
 	}
+	
 }

@@ -1,6 +1,5 @@
 use std::path::Path;
 use tiny_http::{Header, Response};
-use util::*;
 use std::io::Read;
 
  const CONTENT_TYPE:&'static str ="Content-Type";
@@ -89,8 +88,8 @@ pub fn set_file_header<T:Read>(p: &Path, modified:&str,res: &mut Response<T>)  {
         res.add_header(Header::from_bytes(&b"Cache-Control"[..],
                                              &b"public, max-age=31536000"[..])
                               .unwrap());
-        let last_modified = get_last_modified(p).unwrap();
-        res.add_header(Header::from_bytes(&b"Date"[..], &last_modified.as_bytes()[..]).unwrap());
+        //let last_modified = get_last_modified(p).unwrap();
+        res.add_header(Header::from_bytes(&b"Date"[..], &modified.clone().as_bytes()[..]).unwrap());
         res.add_header(Header::from_bytes(&b"Last-Modified"[..], &modified.as_bytes()[..])
                               .unwrap());
 

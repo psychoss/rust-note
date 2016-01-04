@@ -23,17 +23,17 @@ fn main() {
     let context = Context::new(root);
 
 
-    // let out = Command::new("google-chrome")
-    //               .arg("http://localhost:9091")
-    //               .output();
-    // match out {
-    //     Ok(v) => {
-    //         println!("stdout: {}", String::from_utf8_lossy(&v.stdout));
-    //     }
-    //     Err(v) => {
-    //         println!("{:?}", v);
-    //     }
-    // };
+    let out = Command::new("google-chrome")
+                  .arg("http://localhost:9091")
+                  .output();
+    match out {
+        Ok(v) => {
+            println!("stdout: {}", String::from_utf8_lossy(&v.stdout));
+        }
+        Err(v) => {
+            println!("{:?}", v);
+        }
+    };
 
 // Start the server.
     server::new_server("0.0.0.0:9091", context);

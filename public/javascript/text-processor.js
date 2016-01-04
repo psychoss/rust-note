@@ -27,7 +27,7 @@ class TextProcessor {
 		return [" [", str.trim(), "]() "].join("");
 	}
 	static code(str) {
-		if (/\n/.test(str)) {
+		if (!str.trim()||/\n/.test(str)) {
 			return ["\n", "```", "\n", str, "\n", "```", "\n"].join("");
 		} else {
 			return [" `", str.trim(), "` "].join("");

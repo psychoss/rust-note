@@ -8,8 +8,9 @@
  */
 
 class CommandBridge {
-	constructor(editor, textProcessor) {
+	constructor(editor, exchange) {
 		this.editor = editor;
+		this.exchange = exchange;
 		this._configure();
 
 
@@ -76,6 +77,15 @@ class CommandBridge {
 		}, {
 			name: "hr",
 			exec: self._addHrMarker
+		}, {
+			name: "save",
+			bindKey: {
+				win: "F5"
+			},
+			exec: self._saveCommand.bind(self)
+		}, {
+			name: "new",
+			exec: self._newCommand.bind(self)
 		}]
 
 	}
@@ -128,8 +138,16 @@ class CommandBridge {
 	}
 	_addHrMarker(e) {
 		let str = e.session.getTextRange(e.getSelectionRange())
-		str = str+"\n-----\n\n";
+		str = str + "\n-----\n\n";
 		e.session.replace(e.getSelectionRange(), str);
+	}
+	_saveCommand() {
+		this.exchange.save();
+	}
+	_newCommand() {
+		document.body.removeAttribute("data-id");
+		document.title = "New Note";
+		this.editor.setText("");
 	}
 }
 

@@ -54,7 +54,7 @@ impl Db {
         }
     }
     pub fn get_list(&self) -> Option<Vec<NoteItem>> {
-        let mut stm = self.con.prepare("SELECT _id, title, category FROM markdown").unwrap();
+        let mut stm = self.con.prepare("SELECT _id, title, category FROM markdown ORDER BY title").unwrap();
         let mut it = stm.query_map(&[], |row| {
             NoteItem {
                 id: row.get::<i64>(0),
@@ -85,6 +85,6 @@ impl Db {
     pub fn new() -> Db {
         let mut root = env::current_dir().unwrap();
         root.push("database/doc.db");
-        Db { con: Connection::open(root).unwrap() }
+        Db { con: Connection::open(root).expect("Cant open the website.")}
     }
 }

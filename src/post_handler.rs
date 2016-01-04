@@ -19,7 +19,7 @@ pub fn push(mut req: Request, db: &Db) {
             let content = get_string("content", json);
             let create = get_i64("create", json);
             let modified = get_i64("modified", json);
-            println!("{:?}", id);
+             
             if id == 0i64 {
                 let r = db.save(title, cat, content, create, modified);
                 if r != 1 {
@@ -72,12 +72,13 @@ pub fn query_one(mut req: Request, db: &Db) {
                 error_send!(req, 400);
                 return;
             }
+             
             let json = o.unwrap();
             let id = get_string("_id", json).parse::<i64>().unwrap_or(0);
-            println!("{:?}", id);
+             
             if id != 0i64 {
                 let r = db.get_one(id);
-                println!("{:?}",r);
+                 
                 let res = Response::from_string(r);
                 let _ = req.respond(res);
             } else {

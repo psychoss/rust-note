@@ -8,16 +8,24 @@
  */
 class Exchange {
 
-	constructor(editor) {
+	constructor(editor, searchBox) {
 		this.editor = editor;
+		this.searchBox = searchBox;
 
-		save.addEventListener('click', this.save.bind(this));
+
 	}
 	_getId() {
 		return document.body.getAttribute('data-id') || 0;
 	}
-	_setId(id) {
-		document.body.setAttribute('data-id', id);
+
+	_update(title, id) {
+		document.title = title;
+
+		if (id)
+			document.body.setAttribute('data-id', id);
+		this.searchBox.refresh();
+		Util.removeClass(save, "danger");
+
 	}
 	save() {
 		var options = {
@@ -47,18 +55,16 @@ class Exchange {
 		if (data._id === 0) {
 			Ajax.req("/push", options).then(function(res) {
 				res.text().then(function(v) {
-					self._setId(v);
-Util.removeClass(save,"danger");
-					
+					self._update(data.title, v);
 				})
 			}).catch(function() {
 
 			});
 		} else {
-			console.log('update the database use => ',options);
+			console.log('update the database use => ', options);
 			Ajax.req("/update", options).then(function(res) {
 				res.text().then(function(v) {
-Util.removeClass(save,"danger");
+					self._update(data.title);
 				})
 			}).catch(function() {
 

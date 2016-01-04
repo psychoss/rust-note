@@ -89,6 +89,9 @@ class CommandBridge {
 		}, {
 			name: "toarray",
 			exec: self._toarray
+		}, {
+			name: "sort",
+			exec: self._sort
 		}]
 
 	}
@@ -155,6 +158,11 @@ class CommandBridge {
 	_toarray(e) {
 		let str = e.session.getTextRange(e.getSelectionRange())
 		str = TextProcessor.formatToArray(str);
+		e.session.replace(e.getSelectionRange(), str);
+	}
+	_sort(e) {
+		let str = e.session.getTextRange(e.getSelectionRange())
+		str = TextProcessor.sort(str);
 		e.session.replace(e.getSelectionRange(), str);
 	}
 }

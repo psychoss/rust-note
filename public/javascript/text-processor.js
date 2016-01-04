@@ -35,11 +35,11 @@ class TextProcessor {
 	}
 	static li(str) {
 		var list = str.trim().split('\n');
-		var arr = ['\n'];
+		var arr = [];
 		for (var index = 0; index < list.length; index++) {
-			arr.push("- " + list[index].trim() + "\n");
+			arr.push("- " + list[index].trim());
 		}
-		return arr.join('');
+		return arr.join("\n");
 	}
 	static ol(str) {
 		var list = str.trim().split('\n');
@@ -62,5 +62,12 @@ class TextProcessor {
 			arr.push('"' + sl[index] + '“');
 		}
 		return '[' + arr.join() + "]";
+	}
+	static sort(str) {
+		var sl = str.trim().split('\n');
+		sl.sort(function(a, b) {
+			return a.trim() > b.trim();
+		});
+		return sl.join('\n');
 	}
 }

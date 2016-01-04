@@ -2,8 +2,8 @@
 
 const editor = new Editor;
 const searchBox = new SearchBox(editor);
-const exchange=new Exchange(editor,searchBox);
-const cmd_bridge = new CommandBridge(editor,exchange);
+const exchange = new Exchange(editor, searchBox);
+const cmd_bridge = new CommandBridge(editor, exchange);
 
 searchBox.refresh();
 cmd_bridge.bindElement();
@@ -43,4 +43,4 @@ new Dropdown('.js-dropdown-notelist');
 
 
 
-
+Notifier.init();

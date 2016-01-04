@@ -4,6 +4,7 @@
  *  Global Variables:
  * Ajax 
  * TextProcessor 
+ * Notifier
  * ------------------------------------------------------------------------
  */
 class Exchange {
@@ -19,12 +20,17 @@ class Exchange {
 	}
 
 	_update(title, id) {
-		document.title = title;
 
 		if (id)
 			document.body.setAttribute('data-id', id);
-		this.searchBox.refresh();
+
+
 		Util.removeClass(save, "danger");
+		if (document.title !== title) {
+			this.searchBox.refresh();
+			document.title = title;
+		}
+		Notifier.notify("Success");
 
 	}
 	save() {
@@ -58,7 +64,7 @@ class Exchange {
 					self._update(data.title, v);
 				})
 			}).catch(function() {
-
+				Notifier.notify("Failed.");
 			});
 		} else {
 			console.log('update the database use => ', options);
@@ -67,7 +73,7 @@ class Exchange {
 					self._update(data.title);
 				})
 			}).catch(function() {
-
+				Notifier.notify("Failed.");
 			});
 		}
 	}

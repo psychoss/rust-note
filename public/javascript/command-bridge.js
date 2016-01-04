@@ -86,6 +86,9 @@ class CommandBridge {
 		}, {
 			name: "new",
 			exec: self._newCommand.bind(self)
+		}, {
+			name: "toarray",
+			exec: self._toarray
 		}]
 
 	}
@@ -148,6 +151,11 @@ class CommandBridge {
 		document.body.removeAttribute("data-id");
 		document.title = "New Note";
 		this.editor.setText("");
+	}
+	_toarray(e) {
+		let str = e.session.getTextRange(e.getSelectionRange())
+		str = TextProcessor.formatToArray(str);
+		e.session.replace(e.getSelectionRange(), str);
 	}
 }
 

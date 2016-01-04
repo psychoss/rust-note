@@ -50,9 +50,17 @@ class TextProcessor {
 		arr.push('\n');
 		return arr.join('');
 	}
-	static getFirstLine(str){
-		if (str.trim()){
+	static getFirstLine(str) {
+		if (str.trim()) {
 			return str.split('\n')[0];
 		}
+	}
+	static formatToArray(str) {
+		var sl = str.trim().replace(/\"/g, "\\\"").split('\n');
+		var arr = [];
+		for (var index = 0; index < sl.length; index++) {
+			arr.push('"' + sl[index] + '“');
+		}
+		return '[' + arr.join() + "]";
 	}
 }

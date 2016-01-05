@@ -13,16 +13,14 @@ use std::process::Command;
 // Everything starts here.
 
 fn main() {
-
- 
-
     init_data_base();
-
+    
     let mut root = env::current_dir().unwrap();
     root.push("public");
+    
     let context = Context::new(root);
 
-
+// Open browser with "http://localhost:9091" which the server will listen on
     let out = Command::new("google-chrome")
                   .arg("http://localhost:9091")
                   .output();
@@ -35,33 +33,33 @@ fn main() {
         }
     };
 
-// Start the server.
+    // Start the server.
     server::new_server("0.0.0.0:9091", context);
 }
 
 // Initialize the database
 fn init_data_base() {
-    
+
     // Build the Path for where the database will be placed
     let mut root = env::current_dir().unwrap();
     root.push("database/doc.db");
 
-// Only continue if the database is not exists.
+    // Only continue if the database is not exists.
 
     if !root.is_file() {
         match Connection::open(root) {
             Ok(v) => {
                 match get_sql() {
                     Ok(ref sql) => {
-                       for s in sql.split("---"){
-                           // Execute the sql command which parse from 'sql' File
-                        let _=   v.execute(s, &[]);
-                       }
-                       let _=v.close();
+                        for s in sql.split("---") {
+                            // Execute the sql command which parse from 'sql' File
+                            let _ = v.execute(s, &[]);
+                        }
+                        let _ = v.close();
                     }
                     Err(_) => {}
                 }
-               
+
             }
             Err(v) => {
                 println!("{:?}", v);
@@ -72,7 +70,7 @@ fn init_data_base() {
 
 fn get_sql() -> io::Result<String> {
     let mut root = env::current_dir().unwrap();
-    
+
     // A file in which was some sql statement that divided by “---”
     root.push("database/sql");
 

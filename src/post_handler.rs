@@ -7,19 +7,23 @@ pub fn push(mut req: Request, db: &Db) {
 
     match body_parser::parse(&mut req) {
         Some(v) => {
-            let o = v.as_object();
-            if o.is_none() {
-                error_send!(req, 400);
-                return;
-            }
-            let json = o.unwrap();
+            let json={
+                match v.as_object(){
+                    Some(vv)=>vv,
+                    None=>{
+                         error_send!(req, 400);
+                         return;
+                    }
+                }
+            };
+            
             let id = get_string("_id", json).parse::<i64>().unwrap_or(0);
             let title = get_string("title", json);
             let cat = get_string("cat", json);
             let content = get_string("content", json);
             let create = get_i64("create", json);
             let modified = get_i64("modified", json);
-             
+
             if id == 0i64 {
                 let r = db.save(title, cat, content, create, modified);
                 if r != 1 {
@@ -72,13 +76,13 @@ pub fn query_one(mut req: Request, db: &Db) {
                 error_send!(req, 400);
                 return;
             }
-             
+
             let json = o.unwrap();
             let id = get_string("_id", json).parse::<i64>().unwrap_or(0);
-             
+
             if id != 0i64 {
                 let r = db.get_one(id);
-                 
+
                 let res = Response::from_string(r);
                 let _ = req.respond(res);
             } else {
@@ -99,12 +103,7 @@ fn get_i64(key: &str, json: &Object) -> i64 {
 
 fn get_string(key: &str, json: &Object) -> String {
     match json.get(key) {
-        Some(v) => {
-            match v.as_string() {
-                Some(v_s) => v_s.to_string(),
-                None => "".to_string(),
-            }
-        }
+        Some(v) => v.as_string().unwrap_or("").to_string(),
         None => "".to_string(),
     }
 

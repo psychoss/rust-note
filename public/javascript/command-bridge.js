@@ -92,6 +92,9 @@ class CommandBridge {
 		}, {
 			name: "sort",
 			exec: self._sort
+		}, {
+			name: "hidden",
+			exec: self._hidden
 		}]
 
 	}
@@ -164,6 +167,17 @@ class CommandBridge {
 		let str = e.session.getTextRange(e.getSelectionRange())
 		str = TextProcessor.sort(str);
 		e.session.replace(e.getSelectionRange(), str);
+	}
+	_hidden() {
+		let editor = document.querySelector('.editor');
+		let markdownContainer = document.querySelector('.markdown-container');
+		if (!Util.hasClass(editor, 'hidden')) {
+			Util.addClass(editor, 'hidden');
+			Util.addClass(markdownContainer, 'full-width');
+		} else {
+			Util.removeClass(editor, 'hidden');
+			Util.removeClass(markdownContainer, 'full-width');
+		}
 	}
 }
 

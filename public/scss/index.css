@@ -33,6 +33,8 @@ table { border-collapse: collapse; border-spacing: 0; }
 
 .hidden { display: none !important; visibility: hidden !important; }
 
+.full-width { max-width: 100% !important; width: 100% !important; }
+
 .layout { display: flex; flex-direction: row; height: 100%; }
 
 .layout-content { display: flex; flex-direction: column; flex-grow: 1; }

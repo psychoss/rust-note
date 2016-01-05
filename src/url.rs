@@ -12,14 +12,12 @@ impl Url {
         if uri == "/" {
             root = context.root.clone();
             root.push("index.html");
-            Url {
-                path: Some(root)
-            }
+            Url { path: Some(root) }
         } else {
             // trim_left_matches
             // Because the uri always start width "/"
             // have to trim it before push into PathBuf
-            let u = unsafe { uri.slice_unchecked(1, uri.len())};
+            let u = unsafe { uri.slice_unchecked(1, uri.len()) };
             root = context.root.clone();
             parse(u, root)
 
@@ -35,13 +33,13 @@ fn parse(uri: &str, mut root: PathBuf) -> Url {
     let mut v_path: Vec<char> = Vec::new();
     let mut is_path = true;
     let mut has_dot = false;
-
-    for (i, x) in v.iter().enumerate() {
+    // for (i, x) in v.iter().enumerate()
+    for x in v.iter() {
         if x == &'?' {
             is_path = false;
         }
-        if has_dot == false&&x == &'.'  {
-                has_dot = true;
+        if has_dot == false && x == &'.' {
+            has_dot = true;
         }
         if is_path {
             v_path.push(*x);
@@ -50,7 +48,7 @@ fn parse(uri: &str, mut root: PathBuf) -> Url {
     }
     if has_dot {
         // convert Vec<char> to String
-        let s=v_path.iter().cloned().collect::<String>();
+        let s = v_path.iter().cloned().collect::<String>();
         root.push(&s);
         return Url { path: Some(root) };
     }

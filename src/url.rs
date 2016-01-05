@@ -8,17 +8,14 @@ pub struct Url {
 }
 impl Url {
     pub fn new(uri: &str, context: &Arc<Context>) -> Url {
-        let mut root;
+        let mut root = context.root.clone();
         if uri == "/" {
-            root = context.root.clone();
             root.push("index.html");
             Url { path: Some(root) }
         } else {
-            // trim_left_matches
             // Because the uri always start width "/"
             // have to trim it before push into PathBuf
             let u = unsafe { uri.slice_unchecked(1, uri.len()) };
-            root = context.root.clone();
             parse(u, root)
 
         }

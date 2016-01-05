@@ -49,7 +49,7 @@ pub fn push(mut req: Request, db: &Db) {
 
 }
 
-pub fn query(mut req: Request, db: &Db) {
+pub fn query( req: Request, db: &Db) {
     match db.get_list() {
         Some(v) => {
             match json::encode(&v) {

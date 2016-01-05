@@ -55,7 +55,7 @@ impl Db {
     }
     pub fn get_list(&self) -> Option<Vec<NoteItem>> {
         let mut stm = self.con.prepare("SELECT _id, title, category FROM markdown ORDER BY title").unwrap();
-        let mut it = stm.query_map(&[], |row| {
+        let   it = stm.query_map(&[], |row| {
             NoteItem {
                 id: row.get::<i64>(0),
                 title: row.get(1),
@@ -79,7 +79,7 @@ impl Db {
                                  &[&id],
                                  |row| row.get(0)) {
             Ok(v) => v,
-            Err(e) => "".to_string(),
+            Err(_) => "".to_string(),
         }
     }
     pub fn new() -> Db {

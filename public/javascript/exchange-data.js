@@ -48,7 +48,7 @@ class Exchange {
 		} else {
 			data.title = data.title.replace(/^#* */, '').trim();
 		}
-		data.cat = catSelect.value;
+		data.cat = catSelect.querySelector('input').value;
 		if (data.cat === "Notes") {
 			data.cat = "";
 		}

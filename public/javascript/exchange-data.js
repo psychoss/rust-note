@@ -4,14 +4,15 @@
  *  Global Variables:
  * Ajax 
  * TextProcessor 
- * Notifier
+ * 
  * ------------------------------------------------------------------------
  */
 class Exchange {
 
-	constructor(editor, searchBox) {
+	constructor(editor, searchBox, notifier) {
 		this.editor = editor;
 		this.searchBox = searchBox;
+		this.notifier = notifier;
 
 
 	}
@@ -30,7 +31,7 @@ class Exchange {
 			//this.searchBox.refresh();
 			document.title = title;
 		}
-		Notifier.notify("Success");
+		this.notifier.notify("Success");
 
 	}
 	save() {
@@ -70,7 +71,7 @@ class Exchange {
 					self._update(data.title, v);
 				})
 			}).catch(function() {
-				Notifier.notify("Failed.");
+				self.notifier.notify("Failed.");
 			});
 		} else {
 			console.log('update the database use => ', options);
@@ -79,7 +80,7 @@ class Exchange {
 					self._update(data.title);
 				})
 			}).catch(function() {
-				Notifier.notify("Failed.");
+				self.notify("Failed.");
 			});
 		}
 	}

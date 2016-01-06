@@ -2,12 +2,13 @@
 /**
  * ------------------------------------------------------------------------
  *  Global Variables:
- * catSelect(id) 
+ *  catSelect(id) 
  * ------------------------------------------------------------------------
  */
 class SearchBox {
-	constructor(editor) {
+	constructor(editor, notifier) {
 		this.editor = editor;
+		this.notifier = notifier;
 		this.searchBox = document.querySelector('.search-box');
 		this.showTrigger = document.querySelector('.js-notelist');
 		this.searchInput = document.querySelector('.search-input-container input');
@@ -68,7 +69,6 @@ class SearchBox {
 			})
 		}).then(function(res) {
 			res.text().then(function(v) {
-				console.log('complains：', v);
 				try {
 
 					self.editor.setText(v);
@@ -78,7 +78,7 @@ class SearchBox {
 				}
 			})
 		}).catch(function() {
-
+			self.notifier.notify("Failed");
 		});
 	}
 	refresh_by(cat) {
@@ -96,7 +96,7 @@ class SearchBox {
 					Util.html(document.querySelector('.search-list-container'), content);
 					self._bindClick();
 				} catch (error) {
-
+					self.notifier.notify(error);
 				}
 			})
 		}).catch(function() {
@@ -115,11 +115,12 @@ class SearchBox {
 					Util.html(document.querySelector('.search-list-container'), content);
 					self._bindClick();
 				} catch (error) {
+					self.notifier.notify(error);
 
 				}
 			})
 		}).catch(function() {
-
+			self.notifier.notify("Failed");
 		});
 	}
 }

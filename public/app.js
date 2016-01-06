@@ -1,12 +1,14 @@
 'use strict';
 
 const editor = new Editor;
-const searchBox = new SearchBox(editor);
-const exchange = new Exchange(editor, searchBox);
+const notifier = new Notifier;
+const searchBox = new SearchBox(editor,notifier);
+const exchange = new Exchange(editor, searchBox,notifier);
 const cmd_bridge = new CommandBridge(editor, exchange);
+new Dropdown('.js-dropdown-menu');
 
-searchBox.refresh();
 cmd_bridge.bindElement();
+searchBox.refresh();
 
 
 
@@ -28,6 +30,7 @@ function configureMarkdown() {
 }
 configureMarkdown();
 
+
 function autoSize() {
 	preview.style.height = (window.innerHeight - 33) + 'px';
 
@@ -37,10 +40,15 @@ function autoSize() {
 }
 autoSize();
 
-new Dropdown('.js-dropdown-menu');
-new Dropdown('.js-dropdown-notelist');
-
-
-
-
-Notifier.init();
+document.addEventListener('keydown', function(ev) {
+	var k = (ev.which || ev.keyCode);
+	// Prevent page backforward on pressing BackSpace.
+	if (k === 8 && ev.target.tagName !== 'INPUT') {
+		ev.preventDefault();
+	}
+	// Prevent page refresh on pressing F5.
+	if (k === 116) {
+		console.log(ev)
+		ev.preventDefault();
+	}
+});

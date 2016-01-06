@@ -1,17 +1,29 @@
 'use strict';
-
+/**
+ * ------------------------------------------------------------------------
+ *  Global Variables:
+ * Util 
+ * ------------------------------------------------------------------------
+ */
 class Notifier {
-	static init() {
+
+	constructor(params) {
+		this._configure();
+	}
+	_configure() {
 		let n = document.createElement('div');
 		n.className = 'notification';
 		document.body.appendChild(n);
-		Notifier.n = n;
+		this.notifier = n;
 	}
-	static notify(message) {
-		Util.html(Notifier.n,message);
-		Util.addClass(Notifier.n, 'is-visible');
-	   	setTimeout(function() {
-			Util.removeClass(Notifier.n,'is-visible')
+
+	notify(message) {
+		Util.html(this.notifier, message);
+		Util.addClass(this.notifier, 'is-visible');
+		clearTimeout(this.timeout);
+		let self=this;
+		this.timeout = setTimeout(function() {
+			Util.removeClass(self.notifier, 'is-visible')
 		}, 2000);
 	}
 }

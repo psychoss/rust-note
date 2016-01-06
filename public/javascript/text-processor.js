@@ -27,7 +27,7 @@ class TextProcessor {
 		return [" [", str.trim(), "]() "].join("");
 	}
 	static code(str) {
-		if (!str.trim()||/\n/.test(str)) {
+		if (!str.trim() || /\n/.test(str)) {
 			return ["\n", "```", "\n", str, "\n", "```", "\n"].join("");
 		} else {
 			return [" `", str.trim(), "` "].join("");
@@ -51,7 +51,8 @@ class TextProcessor {
 		return arr.join('');
 	}
 	static getFirstLine(str) {
-		if (str.trim()) {
+		str = str.trim();
+		if (str) {
 			return str.split('\n')[0];
 		}
 	}

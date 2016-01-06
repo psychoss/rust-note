@@ -39,12 +39,6 @@ class CommandBridge {
 	_commandBuild() {
 		var self = this;
 		return [{
-			name: "help",
-
-			exec: function() {
-
-			}
-		}, {
 			name: "header",
 			bindKey: {
 				win: "F1"
@@ -95,6 +89,12 @@ class CommandBridge {
 		}, {
 			name: "hidden",
 			exec: self._hidden
+		}, {
+			name: "codePoint",
+			exec: self._getCodePoint
+		}, {
+			name: "sortObject",
+			exec: self._sortObject
 		}]
 
 	}
@@ -178,6 +178,16 @@ class CommandBridge {
 			Util.removeClass(editor, 'hidden');
 			Util.removeClass(markdownContainer, 'full-width');
 		}
+	}
+	_getCodePoint(e) {
+		let str = e.session.getTextRange(e.getSelectionRange())
+		str = TextProcessor.getCodePoint(str);
+		e.session.replace(e.getSelectionRange(), str);
+	}
+	_sortObject(e) {
+		let str = e.session.getTextRange(e.getSelectionRange())
+		str = TextProcessor.sortObject(str);
+		e.session.replace(e.getSelectionRange(), str);
 	}
 }
 

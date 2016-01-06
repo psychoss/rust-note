@@ -65,10 +65,34 @@ class TextProcessor {
 		return '[' + arr.join() + "]";
 	}
 	static sort(str) {
-		var sl = str.trim().split('\n');
-		sl.sort(function(a, b) {
-			return a.trim() > b.trim();
+			var sl = str.trim().split('\n');
+			sl.sort(function(a, b) {
+				return a.trim() > b.trim();
+			});
+			return sl.join('\n');
+		}
+		/**
+		 * 
+		 * Get CodePoint of first character.
+		 * 
+		 */
+	static getCodePoint(str) {
+		var l = str.length;
+		var result = "";
+		for (var index = 0; index < l; index++) {
+			result += '&#' + str.codePointAt(index) + ";";
+		}
+		return result;
+	}
+	static sortObject(str) {
+		var array = eval(str);
+		if (!Array.isArray(array)) {
+			array = [array];
+		}
+		array.sort(function(a, b) {
+			return a.name > b.name
 		});
-		return sl.join('\n');
+		return JSON.stringify(Array)
+
 	}
 }

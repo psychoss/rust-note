@@ -4,47 +4,81 @@ use tiny_http::{Request, Response, StatusCode};
 use database::Db;
 
 pub fn push(mut req: Request, db: &Db) {
-
-    match body_parser::parse(&mut req) {
-        Some(v) => {
-            let json = {
-                match v.as_object() {
-                    Some(vv) => vv,
-                    None => {
-                        error_send!(req, 400);
-                        return;
-                    }
-                }
-            };
-
-            let id = get_string("_id", json).parse::<i64>().unwrap_or(0);
-            let title = get_string("title", json);
-            let cat = get_string("cat", json);
-            let content = get_string("content", json);
-            let create = get_i64("create", json);
-            let modified = get_i64("modified", json);
-
-            if id == 0i64 {
-                let r = db.save(title, cat, content, create, modified);
-                if r != 1 {
-                    error_send!(req, 500);
-                } else {
-                    let res = Response::from_string(db.last_insert_id().to_string());
-                    let _ = req.respond(res);
-                }
-            } else {
-                let r = db.update(id, title, cat, content, modified);
-                if r != 1 {
-                    error_send!(req, 500);
-                } else {
-                    error_send!(req, 200);
-                }
-            }
-        }
+    let body = match body_parser::parse(&mut req) {
+        Some(v) => v,
         None => {
-            error_send!(req, 400);
+            return error_send!(req, 400);
+        }  
+    };
+    let json = match body.as_object() {
+        Some(v) => v,
+        None => {
+            return error_send!(req, 400);
+        }  
+    };
+    let id = get_string("_id", json).parse::<i64>().unwrap_or(0);
+    let title = get_string("title", json);
+    let cat = get_string("cat", json);
+    let content = get_string("content", json);
+    let modified = get_i64("modified", json);
+    if id == 0i64 {
+        let create = get_i64("create", json);
+        let r = db.save(title, cat, content, create, modified);
+        if r != 1 {
+            error_send!(req, 500);
+        } else {
+            let res = Response::from_string(db.last_insert_id().to_string());
+            let _ = req.respond(res);
+        }
+    } else {
+        let r = db.update(id, title, cat, content, modified);
+        if r != 1 {
+            error_send!(req, 500);
+        } else {
+            error_send!(req, 200);
         }
     }
+
+    // match body_parser::parse(&mut req) {
+    //     Some(v) => {
+    //         let json = {
+    //             match v.as_object() {
+    //                 Some(vv) => vv,
+    //                 None => {
+    //                     error_send!(req, 400);
+    //                     return;
+    //                 }
+    //             }
+    //         };
+
+    //         let id = get_string("_id", json).parse::<i64>().unwrap_or(0);
+    //         let title = get_string("title", json);
+    //         let cat = get_string("cat", json);
+    //         let content = get_string("content", json);
+    //         let create = get_i64("create", json);
+    //         let modified = get_i64("modified", json);
+
+    //         if id == 0i64 {
+    //             let r = db.save(title, cat, content, create, modified);
+    //             if r != 1 {
+    //                 error_send!(req, 500);
+    //             } else {
+    //                 let res = Response::from_string(db.last_insert_id().to_string());
+    //                 let _ = req.respond(res);
+    //             }
+    //         } else {
+    //             let r = db.update(id, title, cat, content, modified);
+    //             if r != 1 {
+    //                 error_send!(req, 500);
+    //             } else {
+    //                 error_send!(req, 200);
+    //             }
+    //         }
+    //     }
+    //     None => {
+    //         error_send!(req, 400);
+    //     }
+    // }
 
 
 }
@@ -153,9 +187,7 @@ pub fn query_one(mut req: Request, db: &Db) {
         }
     }
 }
-trait PrintInOption {
-    fn print_in_option(self);
-}
+
 fn get_i64(key: &str, json: &Object) -> i64 {
     match json.get(key) {
         Some(v) => v.as_i64().unwrap_or(0i64),

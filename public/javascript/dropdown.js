@@ -14,9 +14,6 @@ class Dropdown {
 
 	}
 
-	_hidden() {
-
-	}
 	_configure() {
 		if (!this.element) {
 			console.log("Dropdown class complains：", 'missing the element');

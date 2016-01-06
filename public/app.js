@@ -2,13 +2,16 @@
 
 const editor = new Editor;
 const notifier = new Notifier;
-const searchBox = new SearchBox(editor,notifier);
-const exchange = new Exchange(editor, searchBox,notifier);
+const searchBox = new SearchBox(editor, notifier);
+const exchange = new Exchange(editor, searchBox, notifier);
 const cmd_bridge = new CommandBridge(editor, exchange);
 new Dropdown('.js-dropdown-menu');
 
+
+
 cmd_bridge.bindElement();
-searchBox.refresh();
+searchBox.refresh_cat_list();
+//searchBox.refresh();
 
 
 

@@ -7,11 +7,13 @@ use tiny_http::{Method, Request, Response, StatusCode};
 use url::Url;
 
 
+
 const ROUTE_PUSH: &'static str = "/push";
 const ROUTE_UPDATE: &'static str = "/update";
 const ROUTE_QUERY: &'static str = "/query";
 const ROUTE_QUERY_ONE: &'static str = "/query-one";
 const ROUTE_QUERY_CAT: &'static str = "/query-cat";
+const ROUTE_QUERY_CAT_LIST: &'static str = "/query-cat-list";
 
 // A macro for send.
 macro_rules! send {
@@ -68,6 +70,9 @@ impl Req {
     fn post(&self, req: Request) {
         let uri: &str = &req.url().to_string();
         match uri {
+            ROUTE_QUERY_CAT_LIST=>{
+                post_handler::query_cat_list(req,&self.db);
+            }
             ROUTE_PUSH | ROUTE_UPDATE => {
                 post_handler::push(req, &self.db);
             }

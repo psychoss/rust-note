@@ -99,6 +99,23 @@ impl Db {
             Err(_) => None,
         }
     }
+    pub fn get_cat(&self) -> Option<Vec<String>> {
+        let mut stm = self.con
+                          .prepare(" SELECT DISTINCT category FROM markdown")
+                          .unwrap();
+        let it = stm.query_map(&[], |row| row.get(0));
+        match it {
+            Ok(v) => {
+                let mut vec: Vec<String> = Vec::new();
+                for variable in v {
+                    vec.push(variable.unwrap());
+                }
+                Some(vec)
+            }
+            Err(_) => None,
+        }
+
+    }
     pub fn get_one(&self, id: i64) -> String {
         println!("Query {:?}", id);
         match self.con.query_row("SELECT content FROM markdown WHERE _id = $1",

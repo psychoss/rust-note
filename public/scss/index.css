@@ -1,4 +1,5 @@
 /** ------------------------------------------------------------------------ Color  ------------------------------------------------------------------------ */
+/** ------------------------------------------------------------------------ ------------------------------------------------------------------------ */
 html { color: #222; font-family: Helvetica, Arial, sans-serif; font-size: 14px; line-height: 19px; background-color: #fff; direction: ltr; height: 100%; }
 
 body { margin: 0; }
@@ -259,6 +260,28 @@ table { border-collapse: collapse; border-spacing: 0; }
 .btn-small { padding: 3px 6px; font-size: 0.857em; line-height: 16px; }
 
 .btn-large { padding: 9px 18px; font-size: 1.143em; line-height: 20px; }
+
+.btn.btn-select { padding: 0; }
+
+.btn-select { box-sizing: border-box; position: relative; width: 100%; padding: 15px; display: flex; flex-direction: row; }
+
+.btn-select:focus { outline: none; }
+
+.btn-select > span { padding-left: 6px; }
+
+.btn-select > input { background-color: #e9e9e9; border: 0; flex-grow: 1; color: #222; padding: 3px 6px; }
+
+.btn-select > input:focus { outline: none; background-color: #fff; }
+
+.btn-dropdown { box-sizing: border-box; position: absolute; background-color: #e9e9e9; top: 21px; color: #222; left: 0; width: 100%; text-align: left; max-height: 200px; overflow-y: auto; box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15); visibility: hidden; }
+
+.btn-dropdown > a { display: block; padding: 3px 6px; }
+
+.btn-dropdown > a:hover { background-color: #ffffa6; }
+
+.btn-dropdown:hover { color: #222; }
+
+.btn-dropdown.is-visible { visibility: visible; }
 
 .popover { transition: height 0.4s ease; width: 100%; height: 0; z-index: 20; background-color: #e9e9e9; bottom: 0; font-size: 1rem; position: fixed; }
 

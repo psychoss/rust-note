@@ -68,6 +68,25 @@ pub fn query(req: Request, db: &Db) {
         }
     }
 }
+pub fn query_cat_list(req: Request, db: &Db) {
+    match db.get_cat() {
+        Some(v) => {
+            match json::encode(&v) {
+                Ok(v_s) => {
+                    let res = Response::from_string(v_s);
+                    let _ = req.respond(res);
+                }
+                Err(_) => {
+                    error_send!(req, 500);
+                }
+            }
+        }
+        None => {
+            error_send!(req, 500);
+
+        }
+    }
+}
 pub fn query_cat(mut req: Request, db: &Db) {
     match body_parser::parse(&mut req) {
         Some(v) => {

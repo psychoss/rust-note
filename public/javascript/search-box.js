@@ -26,23 +26,42 @@ class SearchBox {
 
 		document.addEventListener('click', function() {
 			Util.removeClass(this.searchBox, 'is-visible');
+			Util.removeClass(catSelect.querySelector('.btn-dropdown'), "is-visible");
 		}.bind(this));
 		this._bindSelect();
 	}
 	_bindSelect() {
 
 		let self = this;
+		let trigger = catSelect.querySelector('.btn-dropdown');
+
 		catSelect.addEventListener('click', function(ev) {
 			ev.stopImmediatePropagation();
 
 		});
-		catSelect.addEventListener('change', function(ev) {
-			if (catSelect.value === "Notes") {
+		catSelect.querySelector('.btn-select span').addEventListener('click', function(ev) {
+
+			if (Util.hasClass(trigger, "is-visible"))
+				Util.removeClass(trigger, "is-visible");
+			else
+				Util.addClass(trigger, "is-visible");
+		});
+		trigger.addEventListener('click', function(ev) {
+			let cat = ev.target.textContent;
+			catSelect.querySelector('input').value = cat;
+			Util.removeClass(trigger, "is-visible");
+			if (cat === "Notes")
 				self.refresh();
-			} else {
-				self.refresh_by(catSelect.value);
-			}
-		})
+			else
+				self.refresh_by(cat);
+		});
+		// catSelect.addEventListener('change', function(ev) {
+		// 	if (catSelect.value === "Notes") {
+		// 		self.refresh();
+		// 	} else {
+		// 		self.refresh_by(catSelect.value);
+		// 	}
+		// })
 	}
 	_bindClick() {
 		var self = this;
@@ -80,6 +99,28 @@ class SearchBox {
 		}).catch(function() {
 			self.notifier.notify("Failed");
 		});
+	}
+	refresh_cat_list() {
+		Ajax.req("/query-cat-list", {
+			method: 'POST'
+		}).then(function(rsp) {
+			rsp.text().then(function(v) {
+				try {
+					var items = JSON.parse(v);
+					var content = "";
+					for (var index = 0; index < items.length; index++) {
+						content += "<a>" + (items[index] || "Notes") + "</a>"
+					}
+
+					catSelect.querySelector('.btn-dropdown').innerHTML = content;
+				} catch (error) {
+
+				}
+
+			})
+		}).catch(function() {
+
+		})
 	}
 	refresh_by(cat) {
 		var self = this;

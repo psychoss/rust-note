@@ -153,6 +153,9 @@ pub fn query_one(mut req: Request, db: &Db) {
         }
     }
 }
+trait PrintInOption {
+    fn print_in_option(self);
+}
 fn get_i64(key: &str, json: &Object) -> i64 {
     match json.get(key) {
         Some(v) => v.as_i64().unwrap_or(0i64),

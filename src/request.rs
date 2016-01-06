@@ -11,6 +11,7 @@ const ROUTE_PUSH: &'static str = "/push";
 const ROUTE_UPDATE: &'static str = "/update";
 const ROUTE_QUERY: &'static str = "/query";
 const ROUTE_QUERY_ONE: &'static str = "/query-one";
+const ROUTE_QUERY_CAT: &'static str = "/query-cat";
 
 // A macro for send.
 macro_rules! send {
@@ -75,6 +76,9 @@ impl Req {
             }
             ROUTE_QUERY_ONE=>{
                 post_handler::query_one(req, &self.db);                
+            }
+            ROUTE_QUERY_CAT=>{
+                post_handler::query_cat(req, &self.db);
             }
             _ => {
                 error_send!(req, 404);

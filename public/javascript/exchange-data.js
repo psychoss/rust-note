@@ -27,7 +27,7 @@ class Exchange {
 
 		Util.removeClass(save, "danger");
 		if (document.title !== title) {
-			this.searchBox.refresh();
+			//this.searchBox.refresh();
 			document.title = title;
 		}
 		Notifier.notify("Success");
@@ -40,12 +40,18 @@ class Exchange {
 		var data = {};
 		data._id = this._getId();
 		data.content = this.editor.getText();
+
 		data.title = TextProcessor.getFirstLine(data.content);
 		if (!data.title) {
 			return;
 		} else {
 			data.title = data.title.replace(/^#* */, '').trim();
 		}
+		data.cat = catSelect.value;
+		if (data.cat === "Notes") {
+			data.cat = "";
+		}
+
 		if (data._id === 0) {
 			data.create = Date.now();
 		}

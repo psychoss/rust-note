@@ -1,11 +1,18 @@
 'use strict';
-
+/**
+ * ------------------------------------------------------------------------
+ *  Global Variables:
+ * catSelect(id) 
+ * ------------------------------------------------------------------------
+ */
 class SearchBox {
 	constructor(editor) {
 		this.editor = editor;
 		this.searchBox = document.querySelector('.search-box');
 		this.showTrigger = document.querySelector('.js-notelist');
 		this.searchInput = document.querySelector('.search-input-container input');
+
+
 		this.searchInput.addEventListener('click', function(ev) {
 			ev.stopImmediatePropagation();
 
@@ -18,9 +25,24 @@ class SearchBox {
 
 		document.addEventListener('click', function() {
 			Util.removeClass(this.searchBox, 'is-visible');
-		}.bind(this))
+		}.bind(this));
+		this._bindSelect();
 	}
+	_bindSelect() {
 
+		let self = this;
+		catSelect.addEventListener('click', function(ev) {
+			ev.stopImmediatePropagation();
+
+		});
+		catSelect.addEventListener('change', function(ev) {
+			if (catSelect.value === "Notes") {
+				self.refresh();
+			} else {
+				self.refresh_by(catSelect.value);
+			}
+		})
+	}
 	_bindClick() {
 		var self = this;
 
@@ -54,7 +76,28 @@ class SearchBox {
 				} catch (error) {
 
 				}
-				console.log('complains：', v);
+			})
+		}).catch(function() {
+
+		});
+	}
+	refresh_by(cat) {
+		var self = this;
+
+		Ajax.req("/query-cat", {
+			method: "POST",
+			body: JSON.stringify({
+				cat: cat
+			})
+		}).then(function(res) {
+			res.text().then(function(v) {
+				try {
+					let content = Util.template("<a data-id=\"{id}\">{title}</a>", JSON.parse(v));
+					Util.html(document.querySelector('.search-list-container'), content);
+					self._bindClick();
+				} catch (error) {
+
+				}
 			})
 		}).catch(function() {
 
@@ -74,7 +117,6 @@ class SearchBox {
 				} catch (error) {
 
 				}
-				console.log('complains：', v);
 			})
 		}).catch(function() {
 

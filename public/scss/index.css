@@ -404,7 +404,9 @@ code { padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2
 
 .search-input-container { padding: 3px; }
 
-.search-input-container > input[type=text] { box-sizing: border-box; border: 0; width: 100%; padding: 3px 6px; }
+.search-input-container > input, .search-input-container > select { width: 100%; padding: 3px 6px; }
+
+.search-input-container > input[type=text] { box-sizing: border-box; border: 0; }
 
 .search-input-container > input[type=text]:focus { outline: none; }
 

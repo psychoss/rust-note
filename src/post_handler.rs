@@ -7,16 +7,16 @@ pub fn push(mut req: Request, db: &Db) {
 
     match body_parser::parse(&mut req) {
         Some(v) => {
-            let json={
-                match v.as_object(){
-                    Some(vv)=>vv,
-                    None=>{
-                         error_send!(req, 400);
-                         return;
+            let json = {
+                match v.as_object() {
+                    Some(vv) => vv,
+                    None => {
+                        error_send!(req, 400);
+                        return;
                     }
                 }
             };
-            
+
             let id = get_string("_id", json).parse::<i64>().unwrap_or(0);
             let title = get_string("title", json);
             let cat = get_string("cat", json);
@@ -49,7 +49,7 @@ pub fn push(mut req: Request, db: &Db) {
 
 }
 
-pub fn query( req: Request, db: &Db) {
+pub fn query(req: Request, db: &Db) {
     match db.get_list() {
         Some(v) => {
             match json::encode(&v) {
@@ -68,6 +68,46 @@ pub fn query( req: Request, db: &Db) {
         }
     }
 }
+pub fn query_cat(mut req: Request, db: &Db) {
+    match body_parser::parse(&mut req) {
+        Some(v) => {
+            let o = v.as_object();
+            if o.is_none() {
+                error_send!(req, 400);
+                return;
+            }
+
+            let json = o.unwrap();
+            let cat = get_string("cat", json);
+
+            if cat.len() > 0 {
+                match db.get_list_by(cat) {
+                    Some(v) => {
+                        match json::encode(&v) {
+                            Ok(v_s) => {
+                                let res = Response::from_string(v_s);
+                                let _ = req.respond(res);
+                            }
+                            Err(_) => {
+                                error_send!(req, 500);
+                            }
+                        }
+                    }
+                    None => {
+                        error_send!(req, 500);
+
+                    }
+                }
+            } else {
+                error_send!(req, 400);
+            }
+        }
+        None => {
+            error_send!(req, 400);
+        }
+    }
+}
+
 pub fn query_one(mut req: Request, db: &Db) {
     match body_parser::parse(&mut req) {
         Some(v) => {

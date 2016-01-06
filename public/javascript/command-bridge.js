@@ -147,7 +147,7 @@ class CommandBridge {
 	}
 	_addHrMarker(e) {
 		let str = e.session.getTextRange(e.getSelectionRange())
-		str = str + "\n-----\n\n";
+		str = str + "\n\n-----\n\n";
 		e.session.replace(e.getSelectionRange(), str);
 	}
 	_saveCommand() {

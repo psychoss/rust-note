@@ -19,11 +19,14 @@
 
 .search-input-container {
 	padding: 3px;
+	>input,
+	>select {
+		width: 100%;
+		padding: 3px 6px;
+	}
 	>input[type=text] {
 		box-sizing: border-box;
 		border: 0;
-		width: 100%;
-		padding: 3px 6px;
 		&:focus {
 			outline: none;
 		}

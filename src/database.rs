@@ -54,8 +54,28 @@ impl Db {
         }
     }
     pub fn get_list(&self) -> Option<Vec<NoteItem>> {
-        let mut stm = self.con.prepare("SELECT _id, title, category FROM markdown ORDER BY title").unwrap();
+        let mut stm = self.con.prepare("SELECT _id, title, category FROM markdown WHERE category = '' ORDER BY title").unwrap();
         let   it = stm.query_map(&[], |row| {
+            NoteItem {
+                id: row.get::<i64>(0),
+                title: row.get(1),
+                cat: row.get(2),
+            }
+        });
+        match it {
+            Ok(v) => {
+                let mut vec: Vec<NoteItem> = Vec::new();
+                for variable in v {
+                    vec.push(variable.unwrap());
+                }
+                Some(vec)
+            }
+            Err(_) => None,
+        }
+    }
+        pub fn get_list_by(&self,cat:String) -> Option<Vec<NoteItem>> {
+        let mut stm = self.con.prepare("SELECT _id, title, category FROM markdown WHERE category = $1  ORDER BY title ").unwrap();
+        let   it = stm.query_map(&[&cat], |row| {
             NoteItem {
                 id: row.get::<i64>(0),
                 title: row.get(1),

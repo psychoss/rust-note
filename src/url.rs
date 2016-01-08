@@ -15,8 +15,8 @@ impl Url {
         } else {
             // Because the uri always start width "/"
             // have to trim it before push into PathBuf
-            let u = unsafe { uri.slice_unchecked(1, uri.len()) };
-            parse(u, root)
+            // let u = unsafe { uri.slice_unchecked(1, uri.len()) };
+            parse(&uri[1..], root)
 
         }
 

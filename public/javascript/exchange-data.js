@@ -71,18 +71,20 @@ class Exchange {
 		var self = this;
 
 		if (data._id === 0) {
+			console.log('insert into the database use => ', data._id);			
 			Ajax.req("/push", options).then(function(res) {
 				res.text().then(function(v) {
+					console.log('Should be the last inserted id =>',v);
 					self._update(data.title, v, data.cat);
 				})
 			}).catch(function() {
 				self.notifier.notify("Failed.");
 			});
 		} else {
-			console.log('update the database use => ', options);
+			console.log('update the database use => ', data._id);
 			Ajax.req("/update", options).then(function(res) {
-				res.text().then(function(v) {
-					self._update(data.title, data.cat);
+				res.text().then(function() {
+					self._update(data.title, 0,data.cat);
 				})
 			}).catch(function() {
 				self.notify("Failed.");

@@ -73,6 +73,9 @@ class CommandBridge {
 			exec: self._addListMarker
 		}, {
 			name: "link",
+			bindKey: {
+				win: "F4"
+			},
 			exec: self._addLinkMarker
 		}, {
 			name: "new",

@@ -146,7 +146,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 
 .editor-container { display: flex; flex-direction: row; align-items: stretch; }
 
-.editor { flex-grow: 1; }
+.editor { box-sizing: border-box; flex-grow: 1; }
 
 .editor-container > .editor { font-size: 1.2rem; }
 

@@ -39,23 +39,11 @@ class CommandBridge {
 	_commandBuild() {
 		var self = this;
 		return [{
-			name: "header",
-			bindKey: {
-				win: "F1"
-			},
-			exec: self._addTitleMarker
-		}, {
 			name: "bold",
 			bindKey: {
 				win: "F3"
 			},
 			exec: self._toggleBoldMarker
-		}, {
-			name: "italic",
-			exec: self._toggleItalicMarker
-		}, {
-			name: "link",
-			exec: self._addLinkMarker
 		}, {
 			name: "code",
 			bindKey: {
@@ -63,14 +51,35 @@ class CommandBridge {
 			},
 			exec: self._addCodeMarker
 		}, {
-			name: "li",
-			exec: self._addListMarker
+			name: "codePoint",
+			exec: self._getCodePoint
 		}, {
-			name: "ol",
-			exec: self._addOlMarker
+			name: "header",
+			bindKey: {
+				win: "F1"
+			},
+			exec: self._addTitleMarker
+		}, {
+			name: "hidden",
+			exec: self._hidden
 		}, {
 			name: "hr",
 			exec: self._addHrMarker
+		}, {
+			name: "italic",
+			exec: self._toggleItalicMarker
+		}, {
+			name: "li",
+			exec: self._addListMarker
+		}, {
+			name: "link",
+			exec: self._addLinkMarker
+		}, {
+			name: "new",
+			exec: self._newCommand.bind(self)
+		}, {
+			name: "ol",
+			exec: self._addOlMarker
 		}, {
 			name: "save",
 			bindKey: {
@@ -78,23 +87,14 @@ class CommandBridge {
 			},
 			exec: self._saveCommand.bind(self)
 		}, {
-			name: "new",
-			exec: self._newCommand.bind(self)
-		}, {
-			name: "toarray",
-			exec: self._toarray
-		}, {
 			name: "sort",
 			exec: self._sort
 		}, {
-			name: "hidden",
-			exec: self._hidden
-		}, {
-			name: "codePoint",
-			exec: self._getCodePoint
-		}, {
 			name: "sortObject",
 			exec: self._sortObject
+		}, {
+			name: "toarray",
+			exec: self._toarray
 		}]
 
 	}

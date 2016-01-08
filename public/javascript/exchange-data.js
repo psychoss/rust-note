@@ -20,7 +20,7 @@ class Exchange {
 		return document.body.getAttribute('data-id') || 0;
 	}
 
-	_update(title, id) {
+	_update(title, id, cat) {
 
 		if (id)
 			document.body.setAttribute('data-id', id);
@@ -28,7 +28,12 @@ class Exchange {
 
 		Util.removeClass(save, "danger");
 		if (document.title !== title) {
-			//this.searchBox.refresh();
+			if (!cat)
+				this.searchBox.refresh();
+			else {
+				this.searchBox.refresh_by(cat);
+				catSelect.querySelector('input').value = cat;
+			}
 			document.title = title;
 		}
 		this.notifier.notify("Success");
@@ -68,7 +73,7 @@ class Exchange {
 		if (data._id === 0) {
 			Ajax.req("/push", options).then(function(res) {
 				res.text().then(function(v) {
-					self._update(data.title, v);
+					self._update(data.title, v, data.cat);
 				})
 			}).catch(function() {
 				self.notifier.notify("Failed.");
@@ -77,7 +82,7 @@ class Exchange {
 			console.log('update the database use => ', options);
 			Ajax.req("/update", options).then(function(res) {
 				res.text().then(function(v) {
-					self._update(data.title);
+					self._update(data.title, data.cat);
 				})
 			}).catch(function() {
 				self.notify("Failed.");

@@ -85,14 +85,44 @@ class TextProcessor {
 		return result;
 	}
 	static sortObject(str) {
-		var array = eval(str);
-		if (!Array.isArray(array)) {
-			array = [array];
-		}
-		array.sort(function(a, b) {
-			return a.name > b.name
-		});
-		return JSON.stringify(Array)
+		return str.replace(/`/g,"&#96;");
+		// var array = str.split('');
+		// var collect = [];
+		// var line = "";
+		// var count = 0;
+		// for (var c of array) {
+		// 	if (c === "{") {
+		// 		count += 1;
+		// 		line += c;
+
+		// 	} else if (c === "}") {
+		// 		count -= 1;
+		// 		line += c;
+
+		// 	} else if (c === "," && count === 0) {
+		// 		collect.push(line);
+		// 		line = "";
+		// 	} else {
+		// 		line += c;
+		// 	}
+
+
+		// }
+		// var re = /name:\s+\"([^\"]*)\"/;
+
+		// console.log('complains：', collect);
+		// collect.sort(function(a, b) {
+		// 	var _a = re.exec(a)[1].trim();
+		// 	var _b = re.exec(b)[1].trim();
+
+		// 	if (_a > _b)
+		// 		return 1;
+		// 	if (_a < _b)
+		// 		return -1;
+		// 	return 0;
+		// });
+
+		// return collect.join();
 
 	}
 }

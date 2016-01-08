@@ -5,6 +5,7 @@
 }
 
 .editor {
+	box-sizing: border-box;
 	flex-grow: 1;
 	.editor-container>& {
 		font-size: 1.2rem;

@@ -101,7 +101,7 @@ impl Db {
     }
     pub fn get_cat(&self) -> Option<Vec<String>> {
         let mut stm = self.con
-                          .prepare(" SELECT DISTINCT category FROM markdown")
+                          .prepare(" SELECT DISTINCT category FROM markdown ORDER BY category")
                           .unwrap();
         let it = stm.query_map(&[], |row| row.get(0));
         match it {

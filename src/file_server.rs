@@ -5,27 +5,14 @@ use header;
 use util;
 
 pub fn serve(req: &Request, p: &Path) -> Result<Response<File>, u16> {
-    let last_modified=util::get_last_modified(p);
-    match  last_modified {
-        Some(ref v) => {
-            if !check_modified(&req, v) {
-                return Err(304);
-            }
-        }
-        None => {
-            return Err(404);
-        }
+    let last_modified = take_or!(util::get_last_modified(p), Err(404));
+    if !check_modified(&req, &last_modified) {
+        return Err(304);
     }
-
-    match File::open(p) {
-        Ok(v) => {
-
-            let mut res = Response::from_file(v);
-            header::set_file_header(p, &last_modified.unwrap(), &mut res);
-            Ok(res)
-        }
-        Err(_) => Err(404),
-    }
+    let file = take_or!(File::open(p), Err(404)=>);
+    let mut res = Response::from_file(file);
+    header::set_file_header(p, &last_modified, &mut res);
+    Ok(res)
 
 }
 fn check_modified(r: &Request, last_modified: &str) -> bool {

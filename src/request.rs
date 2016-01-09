@@ -8,22 +8,31 @@ use url::Url;
 use util;
 
 
+// A few consts to map the  uri of the request
 
+// Insert into or update the database
 const ROUTE_PUSH: &'static str = "/push";
 const ROUTE_UPDATE: &'static str = "/update";
+
+//
 const ROUTE_QUERY: &'static str = "/query";
 const ROUTE_QUERY_ONE: &'static str = "/query-one";
 const ROUTE_QUERY_CAT: &'static str = "/query-cat";
 const ROUTE_QUERY_CAT_LIST: &'static str = "/query-cat-list";
 
 
+// A simple wrapper for the request.
 
 pub struct Req {
+    // The Context of the server
+    // contains a field which represents the path in where the static  files have been placed
     context: Arc<Context>,
+    // Database wrapper
     db: Db,
 }
 
 impl Req {
+    // Get a instance of the Req struct.
     pub fn new(con: Arc<Context>) -> Req {
         Req {
             context: con,
@@ -31,7 +40,10 @@ impl Req {
         }
     }
 
+    // Dispatch the request to  its corresponding handler provider。
     pub fn dispatch(&self, req: Request) {
+
+        // Pattern matching the HTTP METHOD
         match req.method() {
             &Method::Get => {
                 self.get(req);
@@ -40,11 +52,12 @@ impl Req {
                 self.post(req);
             }
             _ => {
-                error_send!(req, 400);
+                util::end_with_code(req, 400);
             }
         }
     }
 
+    // Handle the request if it is a HTTP GET request.
     fn get(&self, req: Request) {
         let uri: &str = &req.url().to_string();
         let url = Url::new(uri, &self.context);
@@ -53,6 +66,8 @@ impl Req {
                           util::end_with_code(req, 404)=>);
         let _ = req.respond(res);
     }
+
+    // Handle the request if it is a HTTP POST request.
     fn post(&self, req: Request) {
         let uri: &str = &req.url().to_string();
         match uri {
@@ -72,7 +87,7 @@ impl Req {
                 post_handler::query_cat(req, &self.db);
             }
             _ => {
-                error_send!(req, 404);
+                util::end_with_code(req, 404);
             }
         }
     }

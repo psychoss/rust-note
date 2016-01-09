@@ -4,7 +4,8 @@ use tiny_http::{Request, Response, StatusCode};
 use database::Db;
 use util::end_with_code;
 
-// Insert the data into database
+// If cant parse the 'id' value from the request ,but other is just ok,insert the data into database
+// If the 'id' is a number and big than 0,or update the database
 pub fn push(mut req: Request, db: &Db) {
     // Parse the body from the request
     // if failed,then end the request with status code 400 (Bad Request)
@@ -33,11 +34,14 @@ pub fn push(mut req: Request, db: &Db) {
             let _ = req.respond(res);
         }
     } else {
+        // the number which is effected
+        // it should be 1
+        // if not, end the request with status code 500  (Internal error)
         let r = db.update(id, title, cat, content, modified);
-        if r != 1 {
-            error_send!(req, 500);
+        if r == 1 {
+           end_with_code(req, 200);
         } else {
-            error_send!(req, 200);
+            end_with_code(req, 500);
         }
     }
 

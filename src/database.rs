@@ -11,11 +11,7 @@ pub struct NoteItem {
     title: String,
     cat: String,
 }
-// impl ToJson for NoteItem {
-//     fn to_json(&self) -> Json {
-//         Json::String(format!("{}+{}+{}i", self. id, self.title,self.cat))
-//     }
-// }
+
 impl Db {
     pub fn last_insert_id(&self) -> i64 {
         self.con.last_insert_rowid()

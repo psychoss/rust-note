@@ -5,9 +5,10 @@ use std::sync::Arc;
 use context::Context;
 use request::Req;
 
-
+// Start the server
 pub fn new_server<A: ToSocketAddrs>(addr: A, context: Context) {
 
+  // Parse the socket address
     let sock_addr = addr.to_socket_addrs()
                         .ok()
                         .and_then(|mut addrs| addrs.next())

@@ -12,14 +12,8 @@ pub fn parse(req: &mut Request) ->Option<Json>{
             if v == "application/json" {
                 let mut content = String::new();
                 req.as_reader().read_to_string(&mut content).unwrap();
-                match  content.parse::<Json>(){
-                    Ok(v)=>{
-                        Some(v)
-                    }
-                    Err(_)=>{
-                       None
-                    }
-                }
+                let json=take_or!(content.parse::<Json>(),None=>);
+                Some(json)
             }else{
                 None
             }
@@ -30,10 +24,3 @@ pub fn parse(req: &mut Request) ->Option<Json>{
     }
 
 }
-// let mut request = server.recv().unwrap();
-
-// if get_content_type(&request) == "application/json" {
-//     let mut content = String::new();
-//     request.as_reader().read_to_string(&mut content).unwrap();
-//     let json: Json = content.parse().unwrap();
-// }

@@ -62,8 +62,14 @@ impl Req {
         let uri: &str = &req.url().to_string();
         let url = Url::new(uri, &self.context);
         let path = take_or!(url.path, util::end_with_code(req, 404));
-        let res = take_or!(file_server::serve(&req, &path),
-                          util::end_with_code(req, 404)=>);
+        let res = match file_server::serve(&req, &path) {
+            Ok(v) => v,
+            Err(v) => {
+                util::end_with_code(req, v);
+                return;
+            }
+        };
+
         let _ = req.respond(res);
     }
 

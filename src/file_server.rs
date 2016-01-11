@@ -5,8 +5,14 @@ use header;
 use util;
 
 pub fn serve(req: &Request, p: &Path) -> Result<Response<File>, u16> {
+    println!("Request file {:?}", p);
     let last_modified = take_or!(util::get_last_modified(p), Err(404));
-    if !check_modified(&req, &last_modified) {
+    let name = match p.extension() {
+        Some(v) => v.to_str().unwrap_or(""),
+        None => "",
+    };
+    if name != "html" && !check_modified(&req, &last_modified) {
+        println!("the file was not been changed");
         return Err(304);
     }
     let file = take_or!(File::open(p), Err(404)=>);

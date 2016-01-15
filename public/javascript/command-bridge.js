@@ -98,6 +98,12 @@ class CommandBridge {
 		}, {
 			name: "toarray",
 			exec: self._toarray
+		}, {
+			name: "filename",
+				bindKey: {
+				win: "Ctrl+F"
+			},
+			exec: self._fileName
 		}]
 
 	}
@@ -190,6 +196,11 @@ class CommandBridge {
 	_sortObject(e) {
 		let str = e.session.getTextRange(e.getSelectionRange())
 		str = TextProcessor.sortObject(str);
+		e.session.replace(e.getSelectionRange(), str);
+	}
+	_fileName(e) {
+		let str = e.session.getTextRange(e.getSelectionRange())
+		str = str.toLowerCase().replace(/ /g,"-");
 		e.session.replace(e.getSelectionRange(), str);
 	}
 }
